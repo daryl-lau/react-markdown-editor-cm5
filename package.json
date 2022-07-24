@@ -1,7 +1,7 @@
 {
   "name": "react-markdown-editor-cm5",
   "author": "daryl lau",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "./lib/index.min.js",
   "license": "MIT",
   "description": "A react markdown editor based on codemirror5",
@@ -10,6 +10,10 @@
     "markdown editor",
     "codemirror5"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daryl-lau/react-markdown-editor-cm5"
+  },
   "scripts": {
     "dev": "webpack-dev-server --config webpack.dev.config.js",
     "build": "webpack --config webpack.pro.config.js",
