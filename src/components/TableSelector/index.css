@@ -1,0 +1,19 @@
+.horizontal {
+  display: flex;
+}
+
+.squal {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.horizontal .squal {
+  margin-left: -1px;
+  margin-top: -1px;
+}
+
+.horizontal .squal.isCovered {
+  background-color: #f0f0f0;
+}

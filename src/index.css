@@ -1,0 +1,17 @@
+.MdEditor {
+  width: 100%;
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.MdEditor.full-screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+}
+
+.hide-editor {
+  display: none;
+}

@@ -1,0 +1,22 @@
+.button {
+  width: 75px;
+  height: 35px;
+  color: #666;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  border-radius: 3px;
+  background-color: #fff;
+  transition: 'background' 300ms ease-out;
+}
+
+.button:hover {
+  background-color: #f5f5f5;
+}
+
+.link-input {
+  color: #999;
+  padding: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  width: 200px;
+}

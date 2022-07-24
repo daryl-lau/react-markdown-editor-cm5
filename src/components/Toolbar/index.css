@@ -1,0 +1,30 @@
+.Toolbar {
+  background-color: #fafafa;
+  color: #555;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: rgb(231 231 231) 0px 2px 4px;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.icon-wrapper {
+  height: 100%;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-wrapper:hover {
+  background-color: #e1e1e1;
+}

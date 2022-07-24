@@ -1,0 +1,9 @@
+{
+  "useTabs": false,
+  "semi": true,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "printWidth": 150,
+  "tabWidth": 2,
+  "prettier/prettier": ["error", { "singleQuote": true, "parser": "flow" }]
+}

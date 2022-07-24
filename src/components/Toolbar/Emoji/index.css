@@ -1,0 +1,19 @@
+.emoji-container {
+  width: 500px;
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 500px;
+}
+
+.emoji {
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  line-height: 25px;
+}
+
+.emoji:hover {
+  cursor: pointer;
+  background-color: #29d3;
+}

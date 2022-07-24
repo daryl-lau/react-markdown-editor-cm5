@@ -1,0 +1,8 @@
+**/.*
+node_modules/
+demo/
+src/
+postcss.config.js
+.prettierrc.json
+tsconfig.json
+webpack.*.js

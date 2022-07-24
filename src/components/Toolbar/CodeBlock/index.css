@@ -1,0 +1,10 @@
+.lang-button {
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.lang-button:hover {
+  color: #29d;
+  cursor: pointer;
+}

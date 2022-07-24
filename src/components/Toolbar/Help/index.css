@@ -1,0 +1,37 @@
+.help table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.875em;
+  width: 100%;
+  display: block;
+  overflow: auto;
+}
+
+.help table td {
+  word-break: break-word;
+  min-width: 60px;
+}
+
+.help tbody tr:nth-of-type(odd) {
+  background: #f9f9f9;
+}
+
+.help th,
+.help td {
+  padding: 8px;
+}
+
+.help th,
+.help td {
+  border: 1px solid #ddd;
+  border-bottom: 3px solid #ddd;
+}
+
+.help th {
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+
+.help td {
+  border-bottom-width: 1px;
+}
