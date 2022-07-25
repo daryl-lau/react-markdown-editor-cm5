@@ -10,21 +10,6 @@ import { Editor } from 'codemirror';
 import classNames from 'classnames';
 import { MdEditorProps, toolbar, valueProps } from './interface';
 
-const reducer = (state: valueProps, payload: { type: string; value: string }) => {
-  switch (payload.type) {
-    case 'setMdValue':
-      return { ...state, mdValue: payload.value };
-    case 'setHtmlValue':
-      return { ...state, htmlValue: payload.value };
-    default:
-      throw new Error();
-  }
-};
-
-const init = (value: string) => {
-  return { mdValue: value, htmlValue: '' };
-};
-
 const defaultToolbar: Array<toolbar> = [
   'undo',
   'redo',
@@ -57,6 +42,21 @@ const defaultToolbar: Array<toolbar> = [
   'help',
 ];
 
+const reducer = (state: valueProps, payload: { type: string; value: string }) => {
+  switch (payload.type) {
+    case 'setMdValue':
+      return { ...state, mdValue: payload.value };
+    case 'setHtmlValue':
+      return { ...state, htmlValue: payload.value };
+    default:
+      throw new Error();
+  }
+};
+
+const init = (value: string) => {
+  return { mdValue: value, htmlValue: '' };
+};
+
 const MdEditor: React.FC<MdEditorProps> = (props) => {
   const {
     width = '100%',
@@ -64,11 +64,11 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
     toolBarHeight = 34,
     onSave,
     toolbars = defaultToolbar,
-    value,
+    initialValue,
     onChange,
     uploadImageMethod,
   } = props;
-  const [state, dispatch] = useReducer(reducer, value, init);
+  const [state, dispatch] = useReducer(reducer, initialValue, init);
   const editorRef = useRef<Editor>();
   const parserRef = useRef<any>();
   const toolbarRef = useRef<any>();
