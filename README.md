@@ -34,7 +34,7 @@ export default App;
 | :--- | :--- | :--- | :--- |
 |  initialValue | string  |   | initial value of editor  |
 |  width  |  number \| string  |  '100%' | width of editor  |
-|  height  |  number   |  800 | height of editor, it's only be number, because editor need calculate height automatic  |
+|  height  |  number   |  800 | height of editor,  |
 |  toolbars | Array\<toolbar\> | all of toolbar | custom toollbar item, if it's a empty array, editor will hide toolbar |
 |  toolBarHeight | number  | 34  | height editor toolbar  |
 |  onSave | (mdValue?: string, htmlValue?: string): void |   | callback when editor save  |
