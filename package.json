@@ -1,7 +1,7 @@
 {
   "name": "react-markdown-editor-cm5",
   "author": "daryl lau",
-  "version": "1.0.4",
+  "version": "1.0.8",
   "main": "./lib/index.min.js",
   "license": "MIT",
   "description": "A react markdown editor based on codemirror5",
@@ -72,11 +72,12 @@
     "rc-tooltip": "^5.2.2",
     "rc-trigger": "^5.3.1",
     "re-resizable": "^6.9.9",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
   },
   "peerDependencies": {
-    "react": ">=16.8.0"
+    "react": ">=16.13.1",
+    "react-dom": ">=16.13.1"
   },
   "browserslist": [
     "defaults",

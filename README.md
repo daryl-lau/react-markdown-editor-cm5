@@ -3,6 +3,8 @@
 ## Installation
 
 ```bash
+yarn add react-markdown-editor-cm5
+or
 npm i react-markdown-editor-cm5
 ```
 
