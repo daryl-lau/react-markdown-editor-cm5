@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
-import { EditorCtx } from '../index';
+import { EditorCtx } from '../editorCtx';
 import Popover from '../../Popover';
 import './index.css';
 

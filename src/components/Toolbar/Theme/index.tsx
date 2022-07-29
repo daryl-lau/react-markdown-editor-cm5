@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { EditorCtx } from '../index';
+import { EditorCtx } from '../editorCtx';
 
 const Theme = () => {
   const { editorRef } = useContext(EditorCtx);

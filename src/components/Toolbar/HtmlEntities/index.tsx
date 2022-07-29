@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { EditorCtx } from '../index';
+import { EditorCtx } from '../editorCtx';
 import Popover from '../../Popover';
 import htmlEntitiesJson from './data/full.json';
 import './index.css';

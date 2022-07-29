@@ -31,6 +31,7 @@ import Help from './Help';
 import Image from './Image';
 import './index.css';
 import { ToolbarProps } from '../../interface';
+import { EditorCtx } from './editorCtx';
 
 const toolbarMap = {
   undo: <Undo />,
@@ -62,8 +63,6 @@ const toolbarMap = {
   help: <Help />,
   image: <Image />,
 };
-
-export const EditorCtx = React.createContext<any>(null);
 
 const Toolbar = (props: ToolbarProps, ref: React.Ref<any>) => {
   const { editorRef, toggleEditor, height, toggleScreen, toolbars, uploadImageMethod } = props;

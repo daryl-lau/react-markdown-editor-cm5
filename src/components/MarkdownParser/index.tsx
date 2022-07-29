@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useImperativeHandle, Dispatch } from 'react';
+import React, { useEffect, useState, useRef, useImperativeHandle } from 'react';
 import $ from 'jquery';
 import hljs from 'highlight.js';
 import './index.css';
@@ -45,7 +45,6 @@ let md = require('markdown-it')({
     const gutter = lines.map((item: string, index: number) => `<span class="code-line">${index + 1}</span><br>`).join('');
     const html = `<pre class="hljs codeWrapper"><table><tbody><tr><td class="gutter"><pre>${gutter}</pre></td><td><code class=${`language-${lang}`}>${parsedCode}</code></td></tr></tbody></table></pre>`;
     return html;
-    return `<pre class="hljs codeWrapper"><code class=${`language-${lang}`}>` + md.utils.escapeHtml(str) + '</code></pre>';
   },
 });
 

@@ -43,7 +43,7 @@ declare interface MdEditorProps {
   toolBarHeight?: number;
   onSave?: callbackFunction;
   toolbars?: Array<toolbar>;
-  value: string;
+  initialValue: string;
   onChange?: callbackFunction;
   uploadImageMethod?: uploadImageMethod;
 }

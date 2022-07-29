@@ -1,6 +1,6 @@
 import { Editor, HintFunction } from 'codemirror';
 
-function checkBelow(editor: Editor, method: (text: string) => boolean) {
+function checkBelow(editor: Editor, method: (text: any) => boolean) {
   var cursor = editor.getCursor();
   var count = editor.lineCount();
   var text = [];

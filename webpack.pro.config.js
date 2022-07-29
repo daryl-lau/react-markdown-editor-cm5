@@ -2,6 +2,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   mode: 'production',
@@ -27,6 +28,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/main.min.css',
     }),
+    // new BundleAnalyzerPlugin(),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
@@ -51,5 +53,15 @@ module.exports = {
       amd: 'highlight.js',
     },
     jquery: 'jquery',
+    lodash: 'lodash',
+    // 'rc-trigger': 'rc-trigger',
+    // 'markdown-it': {
+    //   commonjs: 'markdown-it',
+    //   commonjs2: 'markdown-it',
+    // },
+    // 'markdown-it-emoji': {
+    //   commonjs: 'markdown-it-emoji',
+    //   commonjs2: 'markdown-it-emoji',
+    // },
   },
 };

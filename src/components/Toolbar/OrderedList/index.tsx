@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { EditorCtx } from '../index';
+import { EditorCtx } from '../editorCtx';
 
 const OrderedList = () => {
   const { insertText } = useContext(EditorCtx);
