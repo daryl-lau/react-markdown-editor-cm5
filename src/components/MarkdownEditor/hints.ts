@@ -14,16 +14,14 @@ function checkBelow(editor: Editor, method: (text: string) => boolean) {
 function matchInCode(text: string) {
   var match;
   match = text.match(/`{3,}/g);
-  if (!match) {
-    return true;
-  } else if (match && match.length % 2) {
-    return true;
+  if (match && match.length % 2) {
+    return false;
   } else {
     match = text.match(/`/g);
     if (match && match.length % 2) {
-      return true;
-    } else {
       return false;
+    } else {
+      return true;
     }
   }
 }

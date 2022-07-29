@@ -28,26 +28,23 @@ let md = require('markdown-it')({
   linkify: true,
   typographer: true,
   highlight: function (str: string, lang: string) {
-    if (lang && hljs.getLanguage(lang)) {
+    console.log(str);
+    const language = fenceCodeAlias[lang] || lang;
+    if (language && hljs.getLanguage(language)) {
       try {
-        return (
-          `<pre class="hljs codeWrapper"><code class=${`language-${lang}`}>` +
-          hljs.highlight(str, { language: fenceCodeAlias[lang] || lang, ignoreIllegals: true }).value +
-          '</code></pre>'
-        );
+        const parsedCode = hljs.highlight(str, { language, ignoreIllegals: true }).value;
+        const lines = parsedCode.split(/\n/).slice(0, -1);
+        const gutter = lines.map((item, index) => `<span class="code-line">${index + 1}</span><br>`).join('');
+        const html = `<pre class="hljs codeWrapper"><table><tbody><tr><td class="gutter"><pre>${gutter}</pre></td><td><code class=${`language-${lang}`}>${parsedCode}</code></td></tr></tbody></table></pre>`;
+        return html;
       } catch (__) {}
     }
 
-    if (lang === 'markmap') {
-      try {
-        return (
-          `<pre class="hljs codeWrapper"><code class=${`language-${lang}`}>` +
-          hljs.highlight(str, { language: 'markdown', ignoreIllegals: true }).value +
-          '</code></pre>'
-        );
-      } catch (__) {}
-    }
-
+    const parsedCode = md.utils.escapeHtml(str);
+    const lines = parsedCode.split(/\n/).slice(0, -1);
+    const gutter = lines.map((item: string, index: number) => `<span class="code-line">${index + 1}</span><br>`).join('');
+    const html = `<pre class="hljs codeWrapper"><table><tbody><tr><td class="gutter"><pre>${gutter}</pre></td><td><code class=${`language-${lang}`}>${parsedCode}</code></td></tr></tbody></table></pre>`;
+    return html;
     return `<pre class="hljs codeWrapper"><code class=${`language-${lang}`}>` + md.utils.escapeHtml(str) + '</code></pre>';
   },
 });
@@ -95,7 +92,7 @@ md.use(emoji)
   .use(alerts)
   .use(toc, tocConfig)
   .use(anchor)
-  .use(taskLists)
+  .use(taskLists);
 
 const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown> | undefined) => {
   const { value, height, onScroll, onMouseEnter, dispatch, onChange } = props;
