@@ -39,14 +39,14 @@
 }
 
 /* scrollbar */
-table::-webkit-scrollbar,
+.container .table-container.line::-webkit-scrollbar,
 .codeWrapper::-webkit-scrollbar,
 .container::-webkit-scrollbar {
   width: 6px;
   height: 8px;
 }
 
-table::-webkit-scrollbar-track,
+.container .table-container.line::-webkit-scrollbar-track,
 .codeWrapper::-webkit-scrollbar-track,
 .container::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
@@ -58,7 +58,7 @@ table::-webkit-scrollbar-track,
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
-table::-webkit-scrollbar-thumb,
+.container .table-container.line::-webkit-scrollbar-thumb,
 .codeWrapper::-webkit-scrollbar-thumb {
   border-radius: 3px;
   background-color: #ddd;
@@ -152,46 +152,51 @@ table::-webkit-scrollbar-thumb,
 }
 
 /* table */
-.container > table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  font-size: 0.875em;
-  margin: 0 0 20px;
+.container .table-container.line {
   width: 100%;
-  display: block;
+  margin-bottom: 20px;
   overflow: auto;
 }
 
-.container > table td {
+.container .table-container > table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.875em;
+  width: 100%;
+  /* display: block; */
+  overflow: auto;
+}
+
+.container .table-container > table td {
   word-break: break-word;
   min-width: 60px;
 }
 
-.container > table tbody tr:nth-of-type(odd) {
+.container .table-container > table tbody tr:nth-of-type(odd) {
   background: var(--table-row-odd-bg-color);
 }
 
-.container > table tbody tr:hover {
+.container .table-container > table tbody tr:hover {
   background: var(--table-row-hover-bg-color);
 }
 
-.container > table caption,
-.container > table th,
-.container > table td {
+.container .table-container > table caption,
+.container .table-container > table th,
+.container .table-container > table td {
   padding: 8px;
 }
 
-.container > table th,
-.container > table td {
+.container .table-container > table th,
+.container .table-container > table td {
   border: 1px solid #ddd;
   border-bottom: 3px solid #ddd;
 }
-.container > table th {
+.container .table-container > table th {
   font-weight: 700;
   padding-bottom: 10px;
 }
 
-.container > table td {
+.container .table-container > table td {
   border-bottom-width: 1px;
 }
 

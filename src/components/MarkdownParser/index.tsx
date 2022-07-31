@@ -57,7 +57,7 @@ function injectLineNumbers(tokens: any, idx: number, options: any, env: any, slf
   }
   return slf.renderToken(tokens, idx, options, env, slf);
 }
-md.renderer.rules.paragraph_open = md.renderer.rules.heading_open = md.renderer.rules.table_open = injectLineNumbers;
+md.renderer.rules.paragraph_open = md.renderer.rules.heading_open = injectLineNumbers;
 
 // 添加a标签 target="_blank"
 var defaultRender =
@@ -73,6 +73,24 @@ md.renderer.rules.link_open = function (tokens: any, idx: number, options: any, 
     tokens[idx].attrs[aIndex][1] = '_blank';
   }
   return defaultRender(tokens, idx, options, env, slf);
+};
+
+// 表格外面包一层，使其可以横向滚动
+md.renderer.rules.table_open = function (tokens: any, idx: number, options: any, env: any, slf: any) {
+  var line: number;
+  const { map, level, type } = tokens[idx];
+  if (map && level === 0 && type === 'table_open') {
+    line = tokens[idx].map[0];
+    return `<div class="table-container line" data-line=${line}>` + slf.renderToken(tokens, idx, options, env, slf);
+  }
+  return slf.renderToken(tokens, idx, options, env, slf);
+};
+
+md.renderer.rules.table_close = function (tokens: any, idx: number, options: any, env: any, slf: any) {
+  if (tokens[idx].type === 'table_close' && tokens[idx].level === 0) {
+    return slf.renderToken(tokens, idx, options, env, slf) + '</div>';
+  }
+  return slf.renderToken(tokens, idx, options, env, slf);
 };
 
 const tocConfig = {
