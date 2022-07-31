@@ -115,6 +115,7 @@ table::-webkit-scrollbar-thumb,
 
 .container .codeWrapper {
   overflow-x: auto;
+  font-size: 15px;
 }
 
 .container .codeWrapper table {
@@ -123,7 +124,6 @@ table::-webkit-scrollbar-thumb,
   width: auto;
   border-collapse: collapse;
   border-spacing: 0;
-  font-size: 0.875em;
 }
 
 .container .codeWrapper table td {
@@ -374,7 +374,7 @@ input[type='checkbox']:checked::before {
 .container h4,
 .container h5,
 .container h6 {
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  /* font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif; */
   font-weight: bold;
   line-height: 1.5;
   margin: 20px 0 15px;
