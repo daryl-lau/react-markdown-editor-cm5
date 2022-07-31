@@ -260,7 +260,7 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
             onSave={onSave}
           />
         </Resizable>
-        <div style={{ width: '100%', minWidth: '1px' }}>
+        <div style={{ width: '100%', minWidth: '1px', backgroundColor: '#FFF' }}>
           <MarkdownParser
             height={parserHeight || 800}
             ref={parserRef}
