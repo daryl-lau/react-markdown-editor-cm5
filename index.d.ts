@@ -39,14 +39,15 @@ declare interface callbackFunction {
 
 declare interface MdEditorProps {
   width?: number | string;
-  height?: number;
+  height?: number | string;
   toolBarHeight?: number;
   onSave?: callbackFunction;
   toolbars?: Array<toolbar>;
   initialValue: string;
   onChange?: callbackFunction;
   uploadImageMethod?: uploadImageMethod;
+  style?: React.CSSProperties;
 }
 
-const MdEditor = (props: MdEditorProps) => any;
+declare function MdEditor(props: MdEditorProps): any;
 export default MdEditor;

@@ -5,7 +5,7 @@ import MarkdownEditor from './components/MarkdownEditor';
 import MarkdownParser from './components/MarkdownParser';
 import Toolbar from './components/Toolbar';
 import './index.css';
-import { debounce } from 'lodash';
+import { debounce, isString } from 'lodash';
 import { Editor } from 'codemirror';
 import classNames from 'classnames';
 import { MdEditorProps, toolbar, valueProps } from './interface';
@@ -67,6 +67,7 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
     initialValue,
     onChange,
     uploadImageMethod,
+    style,
   } = props;
   const [state, dispatch] = useReducer(reducer, initialValue, init);
   const editorRef = useRef<Editor>();
@@ -76,10 +77,19 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
   const syncParserScrollRef = useRef<any>();
   const scrollFlag = useRef<string>('');
   const [isEditorShow, setEditorShow] = useState<boolean>(true);
-  const [parserHeight, setParserHeight] = useState(() => {
-    return warpHeight - toolBarHeight;
-  });
   const [isFullScreen, setFullScreen] = useState<boolean>(false);
+
+  const getParserHeight = () => {
+    let height: number;
+    if (isString(warpHeight)) {
+      height = parseInt(warpHeight);
+    } else {
+      height = warpHeight;
+    }
+    return height - toolBarHeight;
+  };
+
+  const [parserHeight, setParserHeight] = useState(getParserHeight);
 
   const buildScrollMap = (value: string): { [index: number]: string } | undefined => {
     if (!editorRef.current) {
@@ -210,7 +220,7 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
 
   useEffect(() => {
     const toolbarHeight = toolbarRef.current.toolbarHeight;
-    const height = isFullScreen ? document.documentElement.clientHeight - toolbarHeight : warpHeight - toolbarHeight;
+    const height = isFullScreen ? document.documentElement.clientHeight - toolbarHeight : getParserHeight();
     resizableRef.current.updateSize({ width: '50%', height });
     setParserHeight(height);
   }, [isFullScreen]);
@@ -220,7 +230,7 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
   const editorClasses = classNames('MdEditor', { 'full-screen': isFullScreen });
 
   return (
-    <div className={editorClasses} style={{ width }}>
+    <div className={editorClasses} style={{ width, ...style }}>
       {toolbars && toolbars.length > 0 && (
         <Toolbar
           ref={toolbarRef}

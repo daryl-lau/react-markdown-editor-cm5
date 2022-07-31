@@ -28,7 +28,6 @@ let md = require('markdown-it')({
   linkify: true,
   typographer: true,
   highlight: function (str: string, lang: string) {
-    console.log(str);
     const language = fenceCodeAlias[lang] || lang;
     if (language && hljs.getLanguage(language)) {
       try {

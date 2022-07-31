@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import React, { Dispatch } from 'react';
 import { EditorConfiguration, Editor } from 'codemirror';
 
 export type toolbar =
@@ -56,13 +56,14 @@ export interface callbackFunction {
 
 export interface MdEditorProps {
   width?: number | string;
-  height?: number;
+  height?: number | string;
   toolBarHeight?: number;
   onSave?: callbackFunction;
   toolbars?: Array<toolbar>;
   initialValue: string;
   onChange?: callbackFunction;
   uploadImageMethod?: uploadImageMethod;
+  style?: React.CSSProperties
 }
 
 export interface Config extends EditorConfiguration {
