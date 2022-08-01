@@ -56,7 +56,7 @@ import 'codemirror/addon/edit/closetag';
 import { Config, MarkdownEditorProps } from '../../interface';
 
 const initialOptions: Config = {
-  placeholder: '开始输入...',
+  placeholder: '写点什么吧~~',
   mode: 'gfm',
   lineNumbers: true, // 是否显示行号
   theme: 'atom-dark', // 主题
