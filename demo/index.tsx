@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MdEditor from '../src';
+import data from './article';
 
 ReactDOM.render(
   <MdEditor
     width={1400}
-    height={'800px'}
+    height={'1000px'}
     style={{ margin: '0 auto' }}
-    initialValue=""
-    // withToc={true}
+    initialValue={data}
+    withToc={false}
     // onSave={(md, html, toc) => {
     //   console.log(md, 'xxx', html, 'yyy', toc);
     // }}

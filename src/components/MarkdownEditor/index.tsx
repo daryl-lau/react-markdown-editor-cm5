@@ -219,7 +219,7 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
 
   return (
     <>
-      <div className="editor" style={{ height: '100%' }} onMouseEnter={onMouseEnter}>
+      <div className="editor" onMouseEnter={onMouseEnter}>
         {isPannelShow && (
           <Pannel searchInput={searchInput} editor={editorRef.current as Editor} showPannel={showPannel} setSearchInput={setSearchInput} />
         )}
