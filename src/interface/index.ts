@@ -48,10 +48,11 @@ export interface ToolbarProps {
 export interface valueProps {
   mdValue: string;
   htmlValue: string;
+  tocValue: string;
 }
 
 export interface callbackFunction {
-  (mdValue?: string, htmlValue?: string): void;
+  (mdValue?: string, htmlValue?: string, tocValue?: string): void;
 }
 
 export interface MdEditorProps {
@@ -63,7 +64,8 @@ export interface MdEditorProps {
   initialValue: string;
   onChange?: callbackFunction;
   uploadImageMethod?: uploadImageMethod;
-  style?: React.CSSProperties
+  style?: React.CSSProperties;
+  withToc?: boolean;
 }
 
 export interface Config extends EditorConfiguration {
@@ -87,12 +89,14 @@ export interface PannelProps {
 }
 
 export interface MarkdownParserProps {
-  value: string;
+  state: valueProps;
   height: number;
   onScroll: () => void;
   onChange?: callbackFunction;
   onMouseEnter: () => void;
   dispatch: Dispatch<{ type: string; value: string }>;
+  toolBarHeight: number;
+  withToc?: boolean;
 }
 
 export interface SqualProps {

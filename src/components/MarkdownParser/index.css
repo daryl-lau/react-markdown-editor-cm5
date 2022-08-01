@@ -24,6 +24,47 @@
   --highlight-gutter-foreground: #9da4b1;
 }
 
+/* TOC */
+.toc-icon {
+  position: fixed;
+  right: 10px;
+  height: 30px !important;
+  color: #555;
+}
+
+.toc-popover-wrap {
+  padding: 0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.toc-list ul {
+  line-height: 2;
+  padding: 0 15px;
+}
+
+.toc-list ul li a {
+  text-decoration: none;
+  color: #61afef;
+  line-height: 1.5;
+  display: block;
+}
+.toc-list ul li a:hover {
+  color: #e06c75;
+}
+
+.toc-list > ul {
+  padding-left: 0;
+}
+.toc-popover-wrap ul li {
+  list-style: none;
+}
+.toc-popover-wrap .popover-inner {
+  max-height: 500px;
+  overflow: auto;
+}
+
 /* container */
 .container {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -40,6 +81,7 @@
 
 /* scrollbar */
 .container .table-container.line::-webkit-scrollbar,
+.toc-popover-wrap .popover-inner::-webkit-scrollbar,
 .codeWrapper::-webkit-scrollbar,
 .container::-webkit-scrollbar {
   width: 6px;
@@ -53,15 +95,17 @@
   border-radius: 3px;
 }
 
+.toc-popover-wrap .popover-inner::-webkit-scrollbar-thumb,
 .container::-webkit-scrollbar-thumb {
   border-radius: 3px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
+.toc-popover-wrap .popover-inner::-webkit-scrollbar-thumb,
 .container .table-container.line::-webkit-scrollbar-thumb,
 .codeWrapper::-webkit-scrollbar-thumb {
   border-radius: 3px;
-  background-color: #ddd;
+  background-color: #f0f0f080;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
 }
 

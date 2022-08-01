@@ -197,7 +197,7 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
         return insertLine(cm, true);
       },
       'Ctrl-S': function (cm) {
-        onSave && onSave(valueRef.current.mdValue, valueRef.current.htmlValue);
+        onSave && onSave(valueRef.current.mdValue, valueRef.current.htmlValue, valueRef.current.tocValue);
       },
     });
 

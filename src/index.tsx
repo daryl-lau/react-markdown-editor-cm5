@@ -48,13 +48,15 @@ const reducer = (state: valueProps, payload: { type: string; value: string }) =>
       return { ...state, mdValue: payload.value };
     case 'setHtmlValue':
       return { ...state, htmlValue: payload.value };
+    case 'setTocValue':
+      return { ...state, tocValue: payload.value };
     default:
       throw new Error();
   }
 };
 
 const init = (value: string) => {
-  return { mdValue: value, htmlValue: '' };
+  return { mdValue: value, htmlValue: '', tocValue: '' };
 };
 
 const MdEditor: React.FC<MdEditorProps> = (props) => {
@@ -68,6 +70,7 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
     onChange,
     uploadImageMethod,
     style,
+    withToc,
   } = props;
   const [state, dispatch] = useReducer(reducer, initialValue, init);
   const editorRef = useRef<Editor>();
@@ -274,7 +277,7 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
           <MarkdownParser
             height={parserHeight || 800}
             ref={parserRef}
-            value={state.mdValue}
+            state={state}
             dispatch={dispatch}
             onScroll={() => {
               syncEditorScroll();
@@ -283,6 +286,8 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
             onMouseEnter={() => {
               scrollFlag.current = 'parser';
             }}
+            toolBarHeight={toolBarHeight}
+            withToc={withToc}
           />
         </div>
       </div>

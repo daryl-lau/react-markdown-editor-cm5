@@ -34,7 +34,7 @@ declare interface uploadImageMethod {
 }
 
 declare interface callbackFunction {
-  (mdValue?: string, htmlValue?: string): void;
+  (mdValue?: string, htmlValue?: string, tocValue?: string): void;
 }
 
 declare interface MdEditorProps {
@@ -47,6 +47,7 @@ declare interface MdEditorProps {
   onChange?: callbackFunction;
   uploadImageMethod?: uploadImageMethod;
   style?: React.CSSProperties;
+  withToc?: boolean;
 }
 
 declare function MdEditor(props: MdEditorProps): any;
