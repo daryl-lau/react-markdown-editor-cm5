@@ -6,6 +6,7 @@ import 'highlight.js/styles/atom-one-dark.css';
 import { MarkdownParserProps } from '../../interface';
 import Popover from '../Popover';
 
+const uslug = require('uslug');
 const emoji = require('markdown-it-emoji');
 const footnote = require('markdown-it-footnote');
 const abbr = require('markdown-it-abbr');
@@ -196,8 +197,9 @@ md.use(emoji)
   .use(inserted)
   .use(mark)
   .use(alerts)
-  // .use(toc, tocConfig)
-  .use(anchor)
+  .use(anchor, {
+    slugify: (s: string) => uslug(s),
+  })
   .use(taskLists);
 
 const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown> | undefined) => {

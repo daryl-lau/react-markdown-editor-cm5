@@ -9,7 +9,7 @@ ReactDOM.render(
     height={'1000px'}
     style={{ margin: '0 auto' }}
     initialValue={data}
-    withToc={false}
+    withToc={true}
     // onSave={(md, html, toc) => {
     //   console.log(md, 'xxx', html, 'yyy', toc);
     // }}
