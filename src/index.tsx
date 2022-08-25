@@ -271,6 +271,7 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
               scrollFlag.current = 'editor';
             }}
             onSave={onSave}
+            uploadImageMethod={uploadImageMethod}
           />
         </Resizable>
         <div style={{ width: '100%', minWidth: '1px', backgroundColor: '#FFF' }}>

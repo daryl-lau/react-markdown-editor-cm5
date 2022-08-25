@@ -79,6 +79,7 @@ export interface MarkdownEditorProps {
   editorRef: React.MutableRefObject<Editor | undefined>;
   onSave?: callbackFunction;
   dispatch: Dispatch<{ type: string; value: string }>;
+  uploadImageMethod?: uploadImageMethod;
 }
 
 export interface PannelProps {
