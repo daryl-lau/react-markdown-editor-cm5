@@ -72,6 +72,9 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
     style,
     withToc,
   } = props;
+  if (!initialValue) {
+    return null;
+  }
   const [state, dispatch] = useReducer(reducer, initialValue, init);
   const editorRef = useRef<Editor>();
   const parserRef = useRef<any>();
