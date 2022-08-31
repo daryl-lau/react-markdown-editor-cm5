@@ -80,6 +80,7 @@ export interface MarkdownEditorProps {
   onSave?: callbackFunction;
   dispatch: Dispatch<{ type: string; value: string }>;
   uploadImageMethod?: uploadImageMethod;
+  initialValue: string;
 }
 
 export interface PannelProps {

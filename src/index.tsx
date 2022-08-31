@@ -72,9 +72,6 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
     style,
     withToc,
   } = props;
-  if (!initialValue) {
-    return null;
-  }
   const [state, dispatch] = useReducer(reducer, initialValue, init);
   const editorRef = useRef<Editor>();
   const parserRef = useRef<any>();
@@ -264,6 +261,7 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
           handleStyles={{ right: { boxShadow: '6px 0px 6px #e7e7e7' } }}
         >
           <MarkdownEditor
+            initialValue={initialValue}
             editorRef={editorRef}
             state={state}
             dispatch={dispatch}
