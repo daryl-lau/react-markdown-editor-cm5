@@ -178,6 +178,10 @@
   width: 100%;
 }
 
+.container pre {
+  tab-size: 4;
+}
+
 .container code,
 .container .codeWrapper .gutter pre {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;

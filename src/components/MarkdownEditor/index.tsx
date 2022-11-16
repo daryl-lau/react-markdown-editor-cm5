@@ -61,6 +61,7 @@ const initialOptions: Config = {
   lineNumbers: true, // 是否显示行号
   theme: 'atom-dark', // 主题
   tabSize: 4, // 默认4
+  indentUnit: 4, // 代码块中换行缩进大小
   matchBrackets: true, // 括号匹配
   matchTags: { bothTags: true }, //标签匹配
   singleCursorHeightPerLine: false,

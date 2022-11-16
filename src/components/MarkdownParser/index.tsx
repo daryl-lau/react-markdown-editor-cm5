@@ -139,7 +139,7 @@ function tocItemToHtml(tocItem, options, md) {
       return li + (childItem.children.length > 0 ? tocItemToHtml(childItem, options, md) : '') + '</li>';
     })
     .join('');
-  return tocResult ? '<ul>' + tocResult + '</ul>' : '';
+  return tocResult ? '<ul class="root">' + tocResult + '</ul>' : '';
 }
 
 // 添加行号以进行精确滚动匹配
