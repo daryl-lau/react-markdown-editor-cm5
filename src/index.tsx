@@ -59,7 +59,7 @@ const init = (value: string) => {
   return { mdValue: value, htmlValue: '', tocValue: '' };
 };
 
-const MdEditor = (props: MdEditorProps, ref: React.Ref<unknown>) => {
+const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
   const {
     width = '100%',
     height: warpHeight = 800,

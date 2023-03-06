@@ -48,6 +48,7 @@ declare interface MdEditorProps {
   uploadImageMethod?: uploadImageMethod;
   style?: React.CSSProperties;
   withToc?: boolean;
+  ref?: React.MutableRefObject<any>
 }
 
 declare function MdEditor(props: MdEditorProps): any;

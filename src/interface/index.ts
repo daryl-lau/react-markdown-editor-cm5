@@ -66,6 +66,7 @@ export interface MdEditorProps {
   uploadImageMethod?: uploadImageMethod;
   style?: React.CSSProperties;
   withToc?: boolean;
+  ref?: React.MutableRefObject<any>;
 }
 
 export interface Config extends EditorConfiguration {
