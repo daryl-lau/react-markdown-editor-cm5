@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState, useImperativeHandle } from 'react';
 import $ from 'jquery';
 import { Resizable, Size } from 're-resizable';
 import MarkdownEditor from './components/MarkdownEditor';
@@ -59,7 +59,7 @@ const init = (value: string) => {
   return { mdValue: value, htmlValue: '', tocValue: '' };
 };
 
-const MdEditor: React.FC<MdEditorProps> = (props) => {
+const MdEditor = (props: MdEditorProps, ref: React.Ref<unknown>) => {
   const {
     width = '100%',
     height: warpHeight = 800,
@@ -81,6 +81,10 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
   const scrollFlag = useRef<string>('');
   const [isEditorShow, setEditorShow] = useState<boolean>(true);
   const [isFullScreen, setFullScreen] = useState<boolean>(false);
+
+  useImperativeHandle(ref, () => ({
+    getValues: () => ({ ...state }),
+  }));
 
   const getParserHeight = () => {
     let height: number;
@@ -297,4 +301,4 @@ const MdEditor: React.FC<MdEditorProps> = (props) => {
   );
 };
 
-export default MdEditor;
+export default React.forwardRef(MdEditor);

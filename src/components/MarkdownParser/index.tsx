@@ -202,10 +202,9 @@ md.use(emoji)
   })
   .use(taskLists);
 
-const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown> | undefined) => {
+const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => {
   const { state, height, onScroll, onMouseEnter, dispatch, onChange, toolBarHeight, withToc = true } = props;
   const [htmlValue, setHtmlValue] = useState('');
-  const [toc, setToc] = useState('');
   const [tocVisible, setTocVisible] = useState(false);
   const markdownParserRef = useRef<any>();
 

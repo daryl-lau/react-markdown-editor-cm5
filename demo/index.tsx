@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import MdEditor from '../src';
-import data from './article';
+import article from './article';
 
 const uploadImageMethod = (file: string | Blob, insertImageCallback: (arg0: any, arg1: any) => void) => {
   const basicUrl = 'http://localhost:8080';
@@ -25,20 +25,16 @@ const uploadImageMethod = (file: string | Blob, insertImageCallback: (arg0: any,
 
 const Editor = () => {
   const [data, setData] = useState('');
+  const editorRef = useRef<any>();
+  const getValue = () => {
+    const values = editorRef.current.getValues();
+    console.log(values);
+  };
 
   const fetchArticle = () => {
-    const uploadApi = 'http://localhost:8080' + '/article/' + '105565939366';
-    fetch(uploadApi, {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { mdValue } = data;
-        setData(mdValue);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    setTimeout(() => {
+      setData(article);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -46,15 +42,19 @@ const Editor = () => {
   }, []);
 
   return (
-    <MdEditor
-      width={1400}
-      height={'1000px'}
-      style={{ margin: '0 auto' }}
-      initialValue={data}
-      withToc={true}
-      uploadImageMethod={uploadImageMethod}
-      onSave={(md, html, toc) => {}}
-    ></MdEditor>
+    <>
+      <button onClick={getValue}>取值</button>
+      <MdEditor
+        ref={editorRef}
+        width={1400}
+        height={'1000px'}
+        style={{ margin: '0 auto' }}
+        initialValue={data}
+        withToc={true}
+        uploadImageMethod={uploadImageMethod}
+        onSave={(md, html, toc) => {}}
+      ></MdEditor>
+    </>
   );
 };
 
