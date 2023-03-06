@@ -229,14 +229,12 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
 
     editorRef.current.on('scroll', () => onScroll());
     editorRef.current.on('paste', (cm, e) => {
-      console.log(e);
       if (!(e.clipboardData && e.clipboardData.items)) {
         alert('该浏览器不支持操作');
         return;
       }
       for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
         var item = e.clipboardData.items[i];
-        console.log(item.kind + ':' + item.type);
         if (item.kind === 'string') {
           item.getAsString(function (str) {
             // str 是获取到的字符串
@@ -244,7 +242,6 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
         } else if (item.kind === 'file') {
           var pasteFile = item.getAsFile();
           // pasteFile就是获取到的文件
-          console.log(pasteFile);
           const cursor = cm.getCursor();
           uploadImageMethod(pasteFile, (fileName: string, imageUrl: string) => insertImageCallback(fileName, imageUrl, cursor.line, cursor.ch));
           // fileUpload(pasteFile);

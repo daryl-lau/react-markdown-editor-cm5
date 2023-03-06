@@ -130,7 +130,6 @@ function flatHeadlineItemsToNestedTree(headlineItems) {
 }
 
 function tocItemToHtml(tocItem, options, md) {
-  console.log(tocItem);
   const tocResult = tocItem.children
     .map((childItem) => {
       let li = '<li>';
@@ -232,7 +231,6 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown> | un
         const headlineItems = findHeadlineElements([1, 2, 3, 4, 5, 6], state.tokens, {});
         const toc = flatHeadlineItemsToNestedTree(headlineItems);
 
-        console.log(toc);
         const tocHtml = tocItemToHtml(toc, {}, md);
         dispatch({ type: 'setTocValue', value: tocHtml });
       });
@@ -249,13 +247,10 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown> | un
     const options = {
       transform: {
         a: ({ nodeName, props, children }) => {
-          console.log(nodeName, props, children);
           return (
             <a
               onClick={() => {
                 const id = uslug(children[0]);
-                console.log($(`#${id}`)[0].offsetTop);
-                console.log($(`.container`)[0].scrollTop);
 
                 $(`.container`)
                   .stop(true)

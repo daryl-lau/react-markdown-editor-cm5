@@ -53,12 +53,7 @@ const Editor = () => {
       initialValue={data}
       withToc={true}
       uploadImageMethod={uploadImageMethod}
-      onSave={(md, html, toc) => {
-        console.log(md, 'xxx', html, 'yyy', toc);
-      }}
-      // onChange={(md, html, toc) => {
-      //   console.log(md, 'xxx', html, 'yyy', toc);
-      // }}
+      onSave={(md, html, toc) => {}}
     ></MdEditor>
   );
 };
