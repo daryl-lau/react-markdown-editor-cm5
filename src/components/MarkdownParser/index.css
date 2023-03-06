@@ -52,6 +52,7 @@
 }
 .toc-list ul li a:hover {
   color: #e06c75;
+  cursor: pointer;
 }
 
 .toc-list > ul {
