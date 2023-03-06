@@ -55,6 +55,7 @@
     "codemirror": "^5.62.3",
     "dayjs": "^1.11.4",
     "highlight.js": "^11.6.0",
+    "htmr": "^1.0.2",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "markdown-it": "^13.0.1",

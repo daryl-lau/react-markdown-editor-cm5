@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useImperativeHandle } from 'react';
 import $ from 'jquery';
 import hljs from 'highlight.js';
+import convert from 'htmr';
 import './index.css';
 import 'highlight.js/styles/atom-one-dark.css';
 import { MarkdownParserProps } from '../../interface';
@@ -91,7 +92,6 @@ function findHeadlineElements(levels, tokens, options) {
       currentHeading = null;
     }
   });
-
   return headings;
 }
 
@@ -130,6 +130,7 @@ function flatHeadlineItemsToNestedTree(headlineItems) {
 }
 
 function tocItemToHtml(tocItem, options, md) {
+  console.log(tocItem);
   const tocResult = tocItem.children
     .map((childItem) => {
       let li = '<li>';
@@ -230,6 +231,8 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown> | un
       md.core.ruler.push('generate_toc', function (state) {
         const headlineItems = findHeadlineElements([1, 2, 3, 4, 5, 6], state.tokens, {});
         const toc = flatHeadlineItemsToNestedTree(headlineItems);
+
+        console.log(toc);
         const tocHtml = tocItemToHtml(toc, {}, md);
         dispatch({ type: 'setTocValue', value: tocHtml });
       });
@@ -243,9 +246,33 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown> | un
   }, [state.mdValue, state.tocValue]);
 
   const renderToc = () => {
+    const options = {
+      transform: {
+        a: ({ nodeName, props, children }) => {
+          console.log(nodeName, props, children);
+          return (
+            <a
+              onClick={() => {
+                const id = uslug(children[0]);
+                console.log($(`#${id}`)[0].offsetTop);
+                console.log($(`.container`)[0].scrollTop);
+
+                $(`.container`)
+                  .stop(true)
+                  .animate({
+                    scrollTop: $(`#${id}`)[0].offsetTop - $(`.container`)[0].offsetTop,
+                  });
+              }}
+            >
+              {children}
+            </a>
+          );
+        },
+      },
+    };
     return (
       <div className="toc-list">
-        <div dangerouslySetInnerHTML={{ __html: state.tocValue }}></div>
+        <div>{convert(state.tocValue, options)}</div>
       </div>
     );
   };
