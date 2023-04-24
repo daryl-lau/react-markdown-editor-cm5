@@ -1,62 +1,15 @@
-import React, { Dispatch, ReducerAction, useCallback, useEffect, useRef, useState } from 'react';
-import CodeMirror, { Editor, Pos } from 'codemirror';
+import React, { useEffect, useRef, useState } from 'react';
+import CodeMirror, { Editor, EditorConfiguration, Pos } from 'codemirror';
 import Pannel from './pannel';
 import hints from './hints';
-// css
 import 'codemirror/lib/codemirror.css';
 import './theme/atom-light.css';
 import './theme/atom-dark.css';
 import './theme/basic.css';
+import { Options, MarkdownEditorProps } from '../../interface';
 
-// mode
-import 'codemirror/mode/gfm/gfm';
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/mode/htmlmixed/htmlmixed';
-import 'codemirror/mode/css/css';
-import 'codemirror/mode/go/go';
-
-// addons
-import 'codemirror/addon/edit/matchbrackets'; // 匹配括号
-import 'codemirror/addon/edit/matchtags'; // 标签匹配高亮
-import 'codemirror/addon/display/placeholder'; // placeholder
-import 'codemirror/addon/selection/active-line'; // 高亮当前行
-
-// 代码折叠
-import 'codemirror/addon/fold/foldcode.js';
-import 'codemirror/addon/fold/foldgutter.js';
-import 'codemirror/addon/fold/brace-fold.js';
-import 'codemirror/addon/fold/xml-fold.js';
-import 'codemirror/addon/fold/indent-fold.js';
-import 'codemirror/addon/fold/markdown-fold.js';
-import 'codemirror/addon/fold/comment-fold.js';
-import 'codemirror/addon/fold/foldgutter.css';
-
-// 鼠标选中高亮
-import 'codemirror/addon/search/match-highlighter';
-
-// 搜素替换
-import 'codemirror/addon/scroll/annotatescrollbar.js'; // 滚动条显示匹配标记
-import 'codemirror/addon/search/matchesonscrollbar.js';
-import 'codemirror/addon/search/matchesonscrollbar.css';
-import 'codemirror/addon/search/searchcursor.js';
-// import "codemirror/addon/search/search.js";
-// import './search'
-
-import 'codemirror/addon/scroll/simplescrollbars';
-import 'codemirror/addon/scroll/simplescrollbars.css';
-
-// 代码提示
-import 'codemirror/addon/hint/show-hint';
-import 'codemirror/addon/hint/show-hint.css';
-
-// 自动闭合括号
-import 'codemirror/addon/edit/closebrackets';
-import 'codemirror/addon/edit/closetag';
-
-import { Config, MarkdownEditorProps } from '../../interface';
-
-const initialOptions: Config = {
-  placeholder: '写点什么吧~~',
+const defaultOptions = {
+  placeholder: 'write somthing...',
   mode: 'gfm',
   lineNumbers: true, // 是否显示行号
   theme: 'atom-dark', // 主题
@@ -67,18 +20,14 @@ const initialOptions: Config = {
   singleCursorHeightPerLine: false,
   lineWrapping: true,
   styleActiveLine: { nonEmpty: true }, // 当前行高亮，nonEmpty表示当选择具体文本时是否高亮当前行
-  // highlightSelectionMatches: true,
-  // 代码折叠
   foldGutter: true,
   gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-
   autoCloseBrackets: true, // 自动闭合括号
   autoCloseTags: true, // 自动闭合标签
-  scrollbarStyle: 'overlay', // 滚动条样式
 };
 
-const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
-  const { editorRef, onSave, uploadImageMethod, initialValue } = props;
+const MarkdownEditor = (props: MarkdownEditorProps, _ref: React.Ref<Editor>) => {
+  const { editorRef, onSave, uploadImageMethod, initialValue, options, languages } = props;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { state, onScroll, onMouseEnter, dispatch } = props;
   const valueRef = useRef<any>();
@@ -89,7 +38,7 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
   const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
-    editorRef.current = CodeMirror.fromTextArea(textareaRef.current as HTMLTextAreaElement, initialOptions);
+    editorRef.current = CodeMirror.fromTextArea(textareaRef.current as HTMLTextAreaElement, { ...defaultOptions, ...options } as Options);
     editorRef.current.setSize('100%', '100%');
 
     function insertLine(cm: Editor, above: boolean) {
@@ -112,14 +61,8 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
       cm.execCommand('indentAuto');
     }
 
-    editorRef.current.setOption('extraKeys', {
-      // search
-      'Ctrl-F': function (cm) {
-        let selection = cm.getSelection();
-        setSearchInput(selection);
-        showPannel(true);
-      },
-      'Ctrl-Down': function (cm) {
+    const extraKeysMap: any = {
+      'Ctrl-Down': function (cm: Editor) {
         let rangeCount = cm.listSelections().length;
         for (let i = 0; i < rangeCount; i++) {
           var range = cm.listSelections()[i];
@@ -127,12 +70,15 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
           else cm.replaceRange(cm.getRange(range.from(), range.to()), range.from());
         }
       },
-      'Alt-Up': function (cm) {
+      'Alt-Up': function (cm: Editor) {
         if (cm.isReadOnly()) return CodeMirror.Pass;
         let ranges = cm.listSelections(),
           linesToMove: any[] = [],
           at = cm.firstLine() - 1,
-          newSels: { anchor: CodeMirror.Position; head: CodeMirror.Position }[] = [];
+          newSels: {
+            anchor: CodeMirror.Position;
+            head: CodeMirror.Position;
+          }[] = [];
         for (let i = 0; i < ranges.length; i++) {
           let range = ranges[i],
             from = range.from().line - 1,
@@ -158,7 +104,7 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
           cm.setSelections(newSels);
         });
       },
-      'Alt-Down': function (cm) {
+      'Alt-Down': function (cm: Editor) {
         if (cm.isReadOnly()) return CodeMirror.Pass;
         let ranges = cm.listSelections(),
           linesToMove: any[] = [],
@@ -187,30 +133,41 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
           cm.scrollIntoView(Pos(from, 1));
         });
       },
-      'Ctrl-Shift-Z': function (cm) {
+      'Ctrl-Shift-Z': function (cm: Editor) {
         cm.execCommand('Ctrl-Y');
       },
-      'Ctrl-Enter': function (cm) {
+      'Ctrl-Enter': function (cm: Editor) {
         return insertLine(cm, false);
       },
-      'Shift-Ctrl-Enter': function (cm) {
+      'Shift-Ctrl-Enter': function (cm: Editor) {
         return insertLine(cm, true);
       },
-      'Ctrl-S': function (cm) {
+      'Ctrl-S': function () {
         onSave && onSave(valueRef.current.mdValue, valueRef.current.htmlValue, valueRef.current.tocValue);
       },
-    });
+    };
+
+    // @ts-ignore
+    if (editorRef.current.getSearchCursor) {
+      extraKeysMap['Ctrl-F'] = function (cm: Editor) {
+        let selection = cm.getSelection();
+        setSearchInput(selection);
+        showPannel(true);
+      };
+    }
+
+    editorRef.current.setOption('extraKeys', extraKeysMap);
 
     // hint
-    editorRef.current.setOption('hintOptions', {
-      hint: hints,
+    editorRef.current.setOption('hintOptions' as keyof EditorConfiguration, {
+      hint: (cm) => hints(cm, languages),
       completeSingle: false,
       closeOnUnfocus: false,
     });
 
-    editorRef.current.on('change', function (cm) {
+    editorRef.current.on('change', function (cm: any) {
       dispatch({ type: 'setMdValue', value: cm.getValue() });
-      cm.showHint();
+      cm.showHint && cm.showHint();
       return CodeMirror.Pass;
     });
 
@@ -236,14 +193,15 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
       for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
         var item = e.clipboardData.items[i];
         if (item.kind === 'string') {
-          item.getAsString(function (str) {
+          item.getAsString(function () {
             // str 是获取到的字符串
           });
         } else if (item.kind === 'file') {
           var pasteFile = item.getAsFile();
           // pasteFile就是获取到的文件
           const cursor = cm.getCursor();
-          uploadImageMethod(pasteFile, (fileName: string, imageUrl: string) => insertImageCallback(fileName, imageUrl, cursor.line, cursor.ch));
+          uploadImageMethod &&
+            uploadImageMethod(pasteFile, (fileName: string, imageUrl: string) => insertImageCallback(fileName, imageUrl, cursor.line, cursor.ch));
           // fileUpload(pasteFile);
         }
       }
@@ -251,12 +209,12 @@ const MarkdownEditor = (props: MarkdownEditorProps, ref: React.Ref<Editor>) => {
   }, []);
 
   useEffect(() => {
-    editorRef.current.setValue(initialValue);
+    editorRef.current && editorRef.current.setValue(initialValue);
   }, [initialValue]);
 
   return (
     <>
-      <div className="editor" onMouseEnter={onMouseEnter}>
+      <div className="rmdcm5-editor" onMouseEnter={onMouseEnter}>
         {isPannelShow && (
           <Pannel searchInput={searchInput} editor={editorRef.current as Editor} showPannel={showPannel} setSearchInput={setSearchInput} />
         )}

@@ -1,20 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import { searchOverlay, parseStr } from '../../utils/utils';
-import { Editor, SearchCursor, Position } from 'codemirror';
+import { Position } from 'codemirror';
 import { PannelProps } from '../../interface';
 
 const Pannel: React.FC<PannelProps> = (props) => {
-  let { searchInput, editor, showPannel, setSearchInput } = props;
+  let { searchInput, editor: edit, showPannel, setSearchInput } = props;
 
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [searchCursor, setSearchCursor] = useState<SearchCursor>();
+  const [searchCursor, setSearchCursor] = useState<any>();
   const [overlay, setOverlay] = useState<any>();
   const [annotate, setAnnotate] = useState<any>();
   const [query, setQuery] = useState<any>();
   const [replaceInput, setReplaceInput] = useState('');
   const [isRegExp, setRegExp] = useState<Boolean>(false);
   const [isCaseSensitive, setCaseSensitive] = useState<boolean>(false);
+
+  let editor: any = edit;
 
   const startSearch = () => {
     setOverlay(searchOverlay(parseSearchInput(searchInput), isCaseSensitive));

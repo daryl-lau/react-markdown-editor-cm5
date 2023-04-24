@@ -29,6 +29,7 @@ import ToggleEditor from './ToggleEditor';
 import FullScreen from './FullScreen';
 import Help from './Help';
 import Image from './Image';
+import Mark from './Mark';
 import './index.css';
 import { ToolbarProps } from '../../interface';
 import { EditorCtx } from './editorCtx';
@@ -38,6 +39,7 @@ const toolbarMap = {
   redo: <Redo />,
   bold: <Bold />,
   through: <Through />,
+  mark: <Mark />,
   italic: <Italic />,
   upperCase: <UpperCase />,
   lowerCase: <LowerCase />,
@@ -65,7 +67,7 @@ const toolbarMap = {
 };
 
 const Toolbar = (props: ToolbarProps, ref: React.Ref<any>) => {
-  const { editorRef, toggleEditor, height, toggleScreen, toolbars, uploadImageMethod } = props;
+  const { editorRef, toggleEditor, height, toggleScreen, toolbars, uploadImageMethod, languages } = props;
   const toolbarRef = useRef<any>();
 
   useImperativeHandle(ref, () => ({
@@ -213,6 +215,7 @@ const Toolbar = (props: ToolbarProps, ref: React.Ref<any>) => {
           toggleScreen,
           insertImage,
           uploadImageMethod,
+          languages,
         }}
       >
         {toolbars &&

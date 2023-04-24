@@ -1,5 +1,3 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable no-useless-escape */
 const queryCaseInsensitive = (query: string) => {
   return typeof query == 'string' && query == query.toLowerCase();
 };

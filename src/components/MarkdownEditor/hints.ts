@@ -1,4 +1,4 @@
-import { Editor, HintFunction } from 'codemirror';
+import { Editor } from 'codemirror';
 
 function checkBelow(editor: Editor, method: (text: any) => boolean) {
   var cursor = editor.getCursor();
@@ -26,7 +26,7 @@ function matchInCode(text: string) {
   }
 }
 
-function completeHint(cm: Editor, self: any, data: any) {
+function completeHint(cm: any, _: any, data: any) {
   let cursor = cm.getCursor();
   let token = cm.getTokenAt(cursor);
   const lang = data.text;
@@ -45,7 +45,7 @@ function completeHint(cm: Editor, self: any, data: any) {
   }
 }
 
-function headerHint(cm: Editor, self: any, data: any) {
+function headerHint(cm: Editor, _: any, data: any) {
   let cursor = cm.getCursor();
   let token = cm.getTokenAt(cursor);
   let start = 0;
@@ -65,7 +65,7 @@ function headerHint(cm: Editor, self: any, data: any) {
   });
 }
 
-const hints: HintFunction = (cm: Editor) => {
+const hints: any = (cm: Editor, languages: string[] | undefined) => {
   let cursor = cm.getCursor();
   let token = cm.getTokenAt(cursor);
 
@@ -94,7 +94,7 @@ const hints: HintFunction = (cm: Editor) => {
 
   // Codeblock Hint
   if (token.type && token.type === 'comment' && !token.start) {
-    let languages = ['javascript', 'typescript', 'go', 'python', 'jsx', 'tsx', 'markmap'];
+    languages = languages || ['bash', 'javascript', 'typescript', 'go', 'python', 'jsx', 'tsx', 'sql', 'markmap'];
     let fencedEndRE = token.state.base.fencedEndRE;
     const current = token.string;
     let commentType = current.split('```')[1];

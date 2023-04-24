@@ -184,11 +184,23 @@
 .atom-dark.CodeMirror-hints {
   padding: 0 !important;
   background: #262a31 !important;
-  border-color: #414141 !important;
+  border-color: #3e4451 !important;
 }
-.atom-dark .CodeMirror-hints::-webkit-scrollbar {
-  width: 0px;
+.atom-dark.CodeMirror-hints::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
 }
+
+.atom-dark.CodeMirror-hints::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #262a31;
+}
+
+.atom-dark.CodeMirror-hints::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #3e4451;
+}
+
 .atom-dark .CodeMirror-hint {
   padding: 4px 8px !important;
   background: #262a31 !important;

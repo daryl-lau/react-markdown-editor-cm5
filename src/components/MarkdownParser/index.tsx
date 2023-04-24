@@ -6,25 +6,25 @@ import './index.css';
 import 'highlight.js/styles/atom-one-dark.css';
 import { MarkdownParserProps } from '../../interface';
 import Popover from '../Popover';
-
-const uslug = require('uslug');
-const emoji = require('markdown-it-emoji');
-const footnote = require('markdown-it-footnote');
-const abbr = require('markdown-it-abbr');
-const deflist = require('markdown-it-deflist');
-const sub = require('markdown-it-sub');
-const sup = require('markdown-it-sup');
-const inserted = require('markdown-it-ins');
-const mark = require('markdown-it-mark');
-const alerts = require('markdown-it-alerts');
-const anchor = require('markdown-it-anchor').default;
-const taskLists = require('markdown-it-task-lists');
+import sub from 'markdown-it-sub';
+import sup from 'markdown-it-sup';
+import inserted from 'markdown-it-ins';
+import mark from 'markdown-it-mark';
+import alerts from 'markdown-it-alerts';
+import anchor from 'markdown-it-anchor';
+import uslug from 'uslug';
+import taskLists from 'markdown-it-task-lists';
+import emoji from 'markdown-it-emoji';
+import footnote from 'markdown-it-footnote';
+import abbr from 'markdown-it-abbr';
+import deflist from 'markdown-it-deflist';
+import markdownIt from 'markdown-it';
 
 const fenceCodeAlias: { [index: string]: string } = {
   markmap: 'markdown',
 };
 
-let md = require('markdown-it')({
+let md: any = markdownIt({
   html: true,
   breaks: true,
   linkify: true,
@@ -35,7 +35,7 @@ let md = require('markdown-it')({
       try {
         const parsedCode = hljs.highlight(str, { language, ignoreIllegals: true }).value;
         const lines = parsedCode.split(/\n/).slice(0, -1);
-        const gutter = lines.map((item, index) => `<span class="code-line">${index + 1}</span><br>`).join('');
+        const gutter = lines.map((_: any, index: number) => `<span class="code-line">${index + 1}</span><br>`).join('');
         const html = `<pre class="hljs codeWrapper"><table><tbody><tr><td class="gutter"><pre>${gutter}</pre></td><td><code class=${`language-${lang}`}>${parsedCode}</code></td></tr></tbody></table></pre>`;
         return html;
       } catch (__) {}
@@ -43,13 +43,13 @@ let md = require('markdown-it')({
 
     const parsedCode = md.utils.escapeHtml(str);
     const lines = parsedCode.split(/\n/).slice(0, -1);
-    const gutter = lines.map((item: string, index: number) => `<span class="code-line">${index + 1}</span><br>`).join('');
+    const gutter = lines.map((_: string, index: number) => `<span class="code-line">${index + 1}</span><br>`).join('');
     const html = `<pre class="hljs codeWrapper"><table><tbody><tr><td class="gutter"><pre>${gutter}</pre></td><td><code class=${`language-${lang}`}>${parsedCode}</code></td></tr></tbody></table></pre>`;
     return html;
   },
 });
 
-function findExistingIdAttr(token) {
+function findExistingIdAttr(token: { attrs: any[] }) {
   if (token && token.attrs && token.attrs.length > 0) {
     const idAttr = token.attrs.find((attr) => {
       if (Array.isArray(attr) && attr.length >= 2) {
@@ -58,16 +58,16 @@ function findExistingIdAttr(token) {
       return false;
     });
     if (idAttr && Array.isArray(idAttr) && idAttr.length >= 2) {
-      const [key, val] = idAttr;
+      const [_, val] = idAttr;
       return val;
     }
   }
   return null;
 }
 
-function findHeadlineElements(levels, tokens, options) {
-  const headings = [];
-  let currentHeading = null;
+function findHeadlineElements(levels: number[], tokens: any[]) {
+  const headings: any[] = [];
+  let currentHeading: { text: any; level?: number; anchor?: any } | null = null;
 
   tokens.forEach((token) => {
     if (token.type === 'heading_open') {
@@ -82,8 +82,8 @@ function findHeadlineElements(levels, tokens, options) {
       }
     } else if (currentHeading && token.type === 'inline') {
       const textContent = token.children
-        .filter((childToken) => childToken.type === 'text' || childToken.type === 'code_inline')
-        .reduce((acc, t) => acc + t.content, '');
+        .filter((childToken: { type: string }) => childToken.type === 'text' || childToken.type === 'code_inline')
+        .reduce((acc: any, t: { content: any }) => acc + t.content, '');
       currentHeading.text = textContent;
     } else if (token.type === 'heading_close') {
       if (currentHeading) {
@@ -95,20 +95,20 @@ function findHeadlineElements(levels, tokens, options) {
   return headings;
 }
 
-function getMinLevel(headlineItems) {
+function getMinLevel(headlineItems: any[]) {
   return Math.min(...headlineItems.map((item) => item.level));
 }
 
-function addListItem(level, text, anchor, rootNode) {
+function addListItem(level: any, text: null, anchor: null, rootNode: { level?: number; anchor?: null; text?: null; children: any; parent?: null }) {
   const listItem = { level, text, anchor, children: [], parent: rootNode };
   rootNode.children.push(listItem);
   return listItem;
 }
 
-function flatHeadlineItemsToNestedTree(headlineItems) {
+function flatHeadlineItemsToNestedTree(headlineItems: any[]) {
   const toc = { level: getMinLevel(headlineItems) - 1, anchor: null, text: null, children: [], parent: null };
   let currentRootNode = toc;
-  let prevListItem = currentRootNode;
+  let prevListItem: any = currentRootNode;
   headlineItems.forEach((headlineItem) => {
     if (headlineItem.level > prevListItem.level) {
       Array.from({ length: headlineItem.level - prevListItem.level }).forEach((_) => {
@@ -121,7 +121,7 @@ function flatHeadlineItemsToNestedTree(headlineItems) {
       prevListItem = addListItem(headlineItem.level, headlineItem.text, headlineItem.anchor, currentRootNode);
     } else if (headlineItem.level < prevListItem.level) {
       for (let i = 0; i < prevListItem.level - headlineItem.level; i++) {
-        currentRootNode = currentRootNode.parent;
+        currentRootNode = currentRootNode.parent as any;
       }
       prevListItem = addListItem(headlineItem.level, headlineItem.text, headlineItem.anchor, currentRootNode);
     }
@@ -129,9 +129,13 @@ function flatHeadlineItemsToNestedTree(headlineItems) {
   return toc;
 }
 
-function tocItemToHtml(tocItem, options, md) {
+function tocItemToHtml(
+  tocItem: { level?: number; anchor?: null; text?: null; children: any; parent?: null },
+  options: {},
+  md: { renderInline: (arg0: any) => any },
+) {
   const tocResult = tocItem.children
-    .map((childItem) => {
+    .map((childItem: { anchor: any; text: any; children: any; level?: number | undefined; parent?: null | undefined }) => {
       let li = '<li>';
       let anchor = childItem.anchor;
       let text = childItem.text ? md.renderInline(childItem.text) : null;
@@ -157,7 +161,7 @@ md.renderer.rules.paragraph_open = md.renderer.rules.heading_open = injectLineNu
 // 添加a标签 target="_blank"
 var defaultRender =
   md.renderer.rules.link_open ||
-  function (tokens: any, idx: number, options: any, env: any, slf: any) {
+  function (tokens: any, idx: number, options: any, _: any, slf: any) {
     return slf.renderToken(tokens, idx, options);
   };
 md.renderer.rules.link_open = function (tokens: any, idx: number, options: any, env: any, slf: any) {
@@ -226,8 +230,8 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
 
   useEffect(() => {
     withToc &&
-      md.core.ruler.push('generate_toc', function (state) {
-        const headlineItems = findHeadlineElements([1, 2, 3, 4, 5, 6], state.tokens, {});
+      md.core.ruler.push('generate_toc', function (state: { tokens: any[] }) {
+        const headlineItems = findHeadlineElements([1, 2, 3, 4, 5, 6], state.tokens);
         const toc = flatHeadlineItemsToNestedTree(headlineItems);
 
         const tocHtml = tocItemToHtml(toc, {}, md);
@@ -245,16 +249,16 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
   const renderToc = () => {
     const options = {
       transform: {
-        a: ({ nodeName, props, children }) => {
+        a: ({ children }: any) => {
           return (
             <a
               onClick={() => {
                 const id = uslug(children[0]);
 
-                $(`.container`)
+                $(`.rmdcm5-container`)
                   .stop(true)
                   .animate({
-                    scrollTop: $(`#${id}`)[0].offsetTop - $(`.container`)[0].offsetTop,
+                    scrollTop: $(`#${id}`)[0].offsetTop - $(`.rmdcm5-container`)[0].offsetTop,
                   });
               }}
             >
@@ -266,7 +270,7 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
     };
     return (
       <div className="toc-list">
-        <div>{convert(state.tocValue, options)}</div>
+        <div>{convert(state.tocValue, options as any)}</div>
       </div>
     );
   };
@@ -280,7 +284,7 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
       <div
         ref={markdownParserRef}
         style={{ height }}
-        className="container"
+        className="rmdcm5-container"
         dangerouslySetInnerHTML={{ __html: htmlValue }}
         onScroll={() => onScroll()}
         onMouseEnter={onMouseEnter}

@@ -1,7 +1,10 @@
+import { EditorConfiguration } from 'codemirror';
+
 declare type toolbar =
   | 'bold'
   | 'checkList'
   | 'clear'
+  | 'mark'
   | 'codeBlock'
   | 'dateTime'
   | 'dividing'
@@ -37,6 +40,11 @@ declare interface callbackFunction {
   (mdValue?: string, htmlValue?: string, tocValue?: string): void;
 }
 
+export interface Options extends EditorConfiguration {
+  singleCursorHeightPerLine?: boolean;
+  languages?: string[];
+}
+
 declare interface MdEditorProps {
   width?: number | string;
   height?: number | string;
@@ -48,7 +56,8 @@ declare interface MdEditorProps {
   uploadImageMethod?: uploadImageMethod;
   style?: React.CSSProperties;
   withToc?: boolean;
-  ref?: React.MutableRefObject<any>
+  ref?: React.MutableRefObject<any>;
+  options?: Options;
 }
 
 declare function MdEditor(props: MdEditorProps): any;

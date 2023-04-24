@@ -4,6 +4,7 @@
   height: 100%;
   box-sizing: border-box;
   transform: scale(1);
+  box-shadow: #e7e7e7 0 2px 4px;
 }
 
 .MdEditor.full-screen {

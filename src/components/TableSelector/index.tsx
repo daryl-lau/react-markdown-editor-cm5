@@ -6,7 +6,7 @@ import './index.css';
 const Squal: React.FC<SqualProps> = (props) => {
   const { rowIndex, colIndex, onChange, isCovered, onClick } = props;
   const classes = classNames('squal', { isCovered });
-  return <div className={classes} onMouseEnter={(e) => onChange(rowIndex, colIndex)} onClick={(e) => onClick(rowIndex, colIndex)}></div>;
+  return <div className={classes} onMouseEnter={() => onChange(rowIndex, colIndex)} onClick={() => onClick(rowIndex, colIndex)}></div>;
 };
 
 const TableSelector: React.FC<TableSelectorProps> = (props) => {
@@ -31,9 +31,9 @@ const TableSelector: React.FC<TableSelectorProps> = (props) => {
 
   return (
     <div>
-      {Array.from({ length: row }, (v, k) => k).map((rowNumber) => (
+      {Array.from({ length: row }, (_, k) => k).map((rowNumber) => (
         <div className="horizontal" key={rowNumber}>
-          {Array.from({ length: col }, (v, k) => k).map((colNumber) => (
+          {Array.from({ length: col }, (_, k) => k).map((colNumber) => (
             <Squal
               isCovered={isCovered(rowNumber, colNumber)}
               key={`${rowNumber}-${colNumber}`}

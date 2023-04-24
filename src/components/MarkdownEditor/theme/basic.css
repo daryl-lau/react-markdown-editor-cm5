@@ -5,13 +5,13 @@
   min-height: 100%;
 }
 
-.editor {
+.rmdcm5-editor {
   position: relative;
   height: 100%;
   overflow: hidden;
 }
 
-.editor input {
+.rmdcm5-editor input {
   outline: none;
   background-color: #1b1d23;
   border: none;
@@ -20,8 +20,8 @@
   padding: 0px 6px;
 }
 
-.editor .search button,
-.editor .replace button {
+.rmdcm5-editor .search button,
+.rmdcm5-editor .replace button {
   background-color: transparent;
   border: none;
   color: #abb2bf;
@@ -29,42 +29,40 @@
   height: 25px;
   border-radius: 4px;
 }
-.editor .search button {
+.rmdcm5-editor .search button {
   width: 25px;
 }
 
-.editor .search button:hover,
-.editor .replace button:hover {
+.rmdcm5-editor .search button:hover,
+.rmdcm5-editor .replace button:hover {
   background-color: #33373b;
 }
 
-.editor .search .search-input .search-result {
+.rmdcm5-editor .search .search-input .search-result {
   display: inline-block;
   font-size: 14px;
   min-width: 100px;
   padding-left: 5px;
 }
 
-.editor .search-replace-pannel {
+.rmdcm5-editor .search-replace-pannel {
   position: absolute;
   background-color: #21252b;
   padding: 6px 10px;
-  /* width: 420px; */
-  /* height: 70px; */
   z-index: 999;
   top: 40px;
   right: 40px;
   color: #abb2bf;
 }
 
-.editor .search-replace-pannel .search {
+.rmdcm5-editor .search-replace-pannel .search {
   display: flex;
   justify-content: space-between;
 }
-.editor .search-replace-pannel .replace .replace-input {
+.rmdcm5-editor .search-replace-pannel .replace .replace-input {
   display: flex;
 }
 
-.editor .search-replace-pannel .search {
+.rmdcm5-editor .search-replace-pannel .search {
   margin-bottom: 3px;
 }

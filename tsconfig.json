@@ -1,32 +1,24 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
-    "declaration": false,
-    "noEmit": true,
-    "emitDeclarationOnly": false,
-    "outDir": "dist",
-    "target": "esnext",
-    "module": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "sourceMap": true,
-    "jsx": "react",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "removeComments": true, //删除注释
-    // "downlevelIteration": true,
-    // "allowJs": true,
-    // "skipLibCheck": true,
-    // "strict": true,
-    // "forceConsistentCasingInFileNames": true,
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
-    // "noEmit": true,
-    // "isolatedModules": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "lib"]
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

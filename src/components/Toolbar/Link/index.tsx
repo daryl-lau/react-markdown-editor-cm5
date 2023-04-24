@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { EditorCtx } from '../editorCtx';
 import Popover from '../../Popover';
 import './index.css';
@@ -42,7 +42,7 @@ const Link = () => {
       content={profileContent}
       transitionName="popover-fade"
       placement="bottom"
-      trigger="hover"
+      trigger="click"
       visible={popoverVisible}
       onVisibleChange={handleVisibleChange}
       overlayClassName="profile-popover-wrap"

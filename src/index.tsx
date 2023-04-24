@@ -1,6 +1,6 @@
-import React, { useEffect, useReducer, useRef, useState, useImperativeHandle } from 'react';
+import React, { useEffect, useLayoutEffect, useReducer, useRef, useState, useImperativeHandle } from 'react';
 import $ from 'jquery';
-import { Resizable, Size } from 're-resizable';
+import { Resizable } from 're-resizable';
 import MarkdownEditor from './components/MarkdownEditor';
 import MarkdownParser from './components/MarkdownParser';
 import Toolbar from './components/Toolbar';
@@ -16,6 +16,7 @@ const defaultToolbar: Array<toolbar> = [
   'bold',
   'through',
   'italic',
+  'mark',
   'upperCase',
   'humpCase',
   'lowerCase',
@@ -59,6 +60,8 @@ const init = (value: string) => {
   return { mdValue: value, htmlValue: '', tocValue: '' };
 };
 
+const defaultLanguages = ['bash', 'javascript', 'typescript', 'go', 'python', 'jsx', 'tsx', 'sql', 'markmap'];
+
 const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
   const {
     width = '100%',
@@ -71,6 +74,7 @@ const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
     uploadImageMethod,
     style,
     withToc,
+    options,
   } = props;
   const [state, dispatch] = useReducer(reducer, initialValue, init);
   const editorRef = useRef<Editor>();
@@ -225,7 +229,7 @@ const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
     setFullScreen((f) => !f);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const toolbarHeight = toolbarRef.current.toolbarHeight;
     const height = isFullScreen ? document.documentElement.clientHeight - toolbarHeight : getParserHeight();
     resizableRef.current.updateSize({ width: '50%', height });
@@ -247,6 +251,7 @@ const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
           height={toolBarHeight}
           toolbars={toolbars}
           uploadImageMethod={uploadImageMethod}
+          languages={options?.languages || defaultLanguages}
         ></Toolbar>
       )}
 
@@ -262,7 +267,8 @@ const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
           className={classes}
           maxWidth="60%"
           minWidth="20%"
-          handleStyles={{ right: { boxShadow: '6px 0px 6px #e7e7e7' } }}
+          handleStyles={{ right: { background: 'linear-gradient(to right, #ccc, transparent)', width: '5px' } }}
+          enable={{ right: true }}
         >
           <MarkdownEditor
             initialValue={initialValue}
@@ -277,6 +283,8 @@ const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
             }}
             onSave={onSave}
             uploadImageMethod={uploadImageMethod}
+            languages={options?.languages || defaultLanguages}
+            options={options}
           />
         </Resizable>
         <div style={{ width: '100%', minWidth: '1px', backgroundColor: '#FFF' }}>

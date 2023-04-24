@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { EditorCtx } from '../editorCtx';
 
 const Header = (props: { name: 'h1' | 'h2' | 'h3' | 'h4' }) => {

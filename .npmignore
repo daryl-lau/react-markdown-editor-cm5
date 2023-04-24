@@ -2,7 +2,9 @@
 node_modules/
 demo/
 src/
-postcss.config.js
 .prettierrc.json
 tsconfig.json
-webpack.*.js
+vite.*.ts
+tsconfig.node.json
+index.html
+stats.html

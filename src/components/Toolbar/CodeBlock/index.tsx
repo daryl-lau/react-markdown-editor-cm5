@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { EditorCtx } from '../editorCtx';
 import Popover from '../../Popover';
 import './index.css';
 
-const languages = ['javascript', 'typescript', 'go', 'python', 'jsx', 'tsx', 'markmap'];
-
 const CodeBlock = () => {
-  const { insertText } = useContext(EditorCtx);
+  const { insertText, languages } = useContext(EditorCtx);
   const [popoverVisible, setPopoverVisible] = useState(false);
 
   const handleClick = (lang: string) => {
@@ -17,7 +15,7 @@ const CodeBlock = () => {
 
   const profileContent = (
     <div>
-      {languages.map((lang) => (
+      {languages.map((lang: string) => (
         <div className="lang-button" key={lang} onClick={() => handleClick(lang)}>
           {lang}
         </div>

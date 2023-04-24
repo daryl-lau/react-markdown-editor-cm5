@@ -5,6 +5,7 @@ export type toolbar =
   | 'bold'
   | 'checkList'
   | 'clear'
+  | 'mark'
   | 'codeBlock'
   | 'dateTime'
   | 'dividing'
@@ -33,7 +34,7 @@ export type toolbar =
   | 'upperCase';
 
 export interface uploadImageMethod {
-  (file: string | Blob, insertImageCallback: (fileName: string, imageUrl: string) => void): void;
+  (file: File | null, insertImageCallback: (fileName: string, imageUrl: string) => void): void;
 }
 
 export interface ToolbarProps {
@@ -43,6 +44,7 @@ export interface ToolbarProps {
   height: number;
   toolbars?: Array<toolbar>;
   uploadImageMethod?: uploadImageMethod;
+  languages?: string[];
 }
 
 export interface valueProps {
@@ -67,10 +69,17 @@ export interface MdEditorProps {
   style?: React.CSSProperties;
   withToc?: boolean;
   ref?: React.MutableRefObject<any>;
+  options: Options;
 }
 
-export interface Config extends EditorConfiguration {
+export interface themeOption {
+  dark?: string;
+  light?: string;
+}
+
+export interface Options extends EditorConfiguration {
   singleCursorHeightPerLine?: boolean;
+  languages?: string[];
 }
 
 export interface MarkdownEditorProps {
@@ -82,6 +91,8 @@ export interface MarkdownEditorProps {
   dispatch: Dispatch<{ type: string; value: string }>;
   uploadImageMethod?: uploadImageMethod;
   initialValue: string;
+  languages?: string[];
+  options: Options;
 }
 
 export interface PannelProps {
