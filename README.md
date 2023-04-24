@@ -1,7 +1,7 @@
 # react markdown editor
 
 ## demo online
-
+[online demo](http://baihuzi.com/editor-demo)
 ## Installation
 
 ```bash
