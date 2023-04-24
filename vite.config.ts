@@ -26,7 +26,6 @@ export default defineConfig({
         'lodash',
         'dayjs',
         'rc-trigger',
-        'rc-tooltip/lib/Tooltip',
         're-resizable',
         'uslug',
         'classnames',
