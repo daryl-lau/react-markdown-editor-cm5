@@ -47,8 +47,6 @@ const reducer = (state: valueProps, payload: { type: string; value: string }) =>
   switch (payload.type) {
     case 'setMdValue':
       return { ...state, mdValue: payload.value };
-    case 'setHtmlValue':
-      return { ...state, htmlValue: payload.value };
     case 'setTocValue':
       return { ...state, tocValue: payload.value };
     default:
@@ -57,7 +55,7 @@ const reducer = (state: valueProps, payload: { type: string; value: string }) =>
 };
 
 const init = (value: string) => {
-  return { mdValue: value, htmlValue: '', tocValue: '' };
+  return { mdValue: value, tocValue: '' };
 };
 
 const defaultLanguages = ['bash', 'javascript', 'typescript', 'go', 'python', 'jsx', 'tsx', 'sql', 'markmap'];
@@ -87,7 +85,9 @@ const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
   const [isFullScreen, setFullScreen] = useState<boolean>(false);
 
   useImperativeHandle(ref, () => ({
-    getValues: () => ({ ...state }),
+    getValues: () => {
+      return { ...state, htmlValue: parserRef.current.getHtml() };
+    },
   }));
 
   const getParserHeight = () => {

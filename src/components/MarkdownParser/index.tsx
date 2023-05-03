@@ -18,6 +18,8 @@ import emoji from 'markdown-it-emoji';
 import footnote from 'markdown-it-footnote';
 import abbr from 'markdown-it-abbr';
 import deflist from 'markdown-it-deflist';
+import mathjax3 from 'markdown-it-mathjax3';
+import mermaid from 'mermaid';
 import markdownIt from 'markdown-it';
 
 const fenceCodeAlias: { [index: string]: string } = {
@@ -143,7 +145,7 @@ function tocItemToHtml(
       return li + (childItem.children.length > 0 ? tocItemToHtml(childItem, options, md) : '') + '</li>';
     })
     .join('');
-  return tocResult ? '<ul class="root">' + tocResult + '</ul>' : '';
+  return tocResult ? '<ul class="toc-root">' + tocResult + '</ul>' : '';
 }
 
 // 添加行号以进行精确滚动匹配
@@ -192,6 +194,7 @@ md.renderer.rules.table_close = function (tokens: any, idx: number, options: any
   return slf.renderToken(tokens, idx, options, env, slf);
 };
 
+const defaultRenderer = md.renderer.rules.fence.bind(md.renderer.rules);
 md.use(emoji)
   .use(footnote)
   .use(abbr)
@@ -204,15 +207,20 @@ md.use(emoji)
   .use(anchor, {
     slugify: (s: string) => uslug(s),
   })
-  .use(taskLists);
+  .use(taskLists)
+  .use(mathjax3);
 
 const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => {
   const { state, height, onScroll, onMouseEnter, dispatch, onChange, toolBarHeight, withToc = true } = props;
   const [htmlValue, setHtmlValue] = useState('');
   const [tocVisible, setTocVisible] = useState(false);
   const markdownParserRef = useRef<any>();
+  const codeRef = useRef<any>({});
+  const svgRef = useRef<any>({});
+  const [current, setCurrent] = useState('');
 
   useImperativeHandle(ref, () => ({
+    getHtml: () => $(markdownParserRef.current).html(),
     getScrollTop: () => markdownParserRef.current.scrollTop,
     getOffsetTop: () => markdownParserRef.current.getBoundingClientRect().top,
     getLines: () => Array.from(markdownParserRef.current.getElementsByClassName('line')),
@@ -229,6 +237,44 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
   }));
 
   useEffect(() => {
+    mermaid.initialize({ gitGraph: { useMaxWidth: true }, pie: { useMaxWidth: true } });
+    md.renderer.rules.fence = (tokens: any, idx: string | number, opts: any, env: any, self: any) => {
+      const token = tokens[idx];
+      const code = token.content.trim();
+      const info = token.info.trim();
+      if (info.startsWith('mermaid=')) {
+        const id = info.split('=')[1];
+        const uniqId = 'render' + id;
+        if (codeRef.current[uniqId] != code) {
+          setCurrent(`${uniqId}-${+new Date()}`);
+        }
+        if (svgRef.current[uniqId]) {
+          return `<div class="mermaid ${uniqId}" data-id=${uniqId}><div id="code-${uniqId}" style="display:none">${code}</div><div id="svg-${uniqId}">${svgRef.current[uniqId]}</div></div>`;
+        }
+        return `<div class="mermaid ${uniqId}" data-id=${uniqId}><div id="code-${uniqId}" style="display:none">${code}</div><div id="svg-${uniqId}"></div></div>`;
+      }
+      return defaultRenderer(tokens, idx, opts, env, self);
+    };
+  }, []);
+
+  useEffect(() => {
+    $('.mermaid').each((_, ele) => {
+      const id = ele.dataset.id || '';
+      const code = $(`#code-${id}`).text();
+      if (code === codeRef.current[id]) {
+        return;
+      }
+      mermaid.render(id, code, $(`#svg-${id}`)[0]).then((res) => {
+        if (res.svg.length > 0) {
+          svgRef.current[id] = res.svg;
+          codeRef.current[id] = code;
+          $(`#svg-${id}`).html(res.svg);
+        }
+      });
+    });
+  }, [current]);
+
+  useEffect(() => {
     withToc &&
       md.core.ruler.push('generate_toc', function (state: { tokens: any[] }) {
         const headlineItems = findHeadlineElements([1, 2, 3, 4, 5, 6], state.tokens);
@@ -241,7 +287,6 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
 
   useEffect(() => {
     const htmlVlaue = md.render(state.mdValue);
-    dispatch({ type: 'setHtmlValue', value: htmlVlaue });
     onChange && onChange(state.mdValue, htmlVlaue, state.tocValue);
     setHtmlValue(htmlVlaue);
   }, [state.mdValue, state.tocValue]);

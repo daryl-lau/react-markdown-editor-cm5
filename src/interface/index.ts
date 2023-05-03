@@ -49,7 +49,6 @@ export interface ToolbarProps {
 
 export interface valueProps {
   mdValue: string;
-  htmlValue: string;
   tocValue: string;
 }
 
@@ -83,7 +82,7 @@ export interface Options extends EditorConfiguration {
 }
 
 export interface MarkdownEditorProps {
-  state: { mdValue: string; htmlValue: string };
+  state: { mdValue: string };
   onScroll: () => void;
   onMouseEnter: () => void;
   editorRef: React.MutableRefObject<Editor | undefined>;

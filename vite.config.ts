@@ -44,6 +44,8 @@ export default defineConfig({
         'markdown-it-footnote',
         'markdown-it-abbr',
         'markdown-it-deflist',
+        'markdown-it-mathjax3',
+        'mermaid',
       ],
     },
   },

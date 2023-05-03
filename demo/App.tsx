@@ -82,7 +82,7 @@ const App = () => {
       <button onClick={getValue}>取值</button>
       <MdEditor
         ref={editorRef}
-        width={1400}
+        width={'100%'}
         height={'1000px'}
         style={{ margin: '0 auto' }}
         initialValue={data}

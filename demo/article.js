@@ -1,7 +1,8 @@
-const data =
-  `# react markdown editor
-
+const data = `# react markdown editor
+A react markdown editor based on codemirror5
 ## demo online
+
+http://baihuzi.com/editor-demo
 
 ## Installation
 
@@ -313,6 +314,177 @@ console.log(foo(5));
 
 [^second]: Footnote text.
 
+## Mathjax
+$$\\begin{bmatrix}
+{a_{11}}&{a_{12}}&{\\cdots}&{a_{1n}}\\\\
+{a_{21}}&{a_{22}}&{\\cdots}&{a_{2n}}\\\\
+{\\vdots}&{\\vdots}&{\\ddots}&{\\vdots}\\\\
+{a_{m1}}&{a_{m2}}&{\\cdots}&{a_{mn}}\\\\
+\\end{bmatrix}$$
+
+$$\\begin{cases}
+a_1x+b_1y+c_1z=d_1\\\\
+a_2x+b_2y+c_2z=d_2\\\\
+a_3x+b_3y+c_3z=d_3\\\\
+\\end{cases}
+$$
+
+$$
+x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.
+$$
+
+$$
+\\Gamma(z) = \\int_0^\\infty t^{z-1}e^{-t}dt\\,.
+$$
+
+## Mermaid
+To improve rendering performance,  you need to provide an unique ID for each mermaid block. Like mermaid=ID
+### sequenceDiagram
+\`\`\`mermaid=1
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+\`\`\`
+
+
+### gantt
+\`\`\`mermaid=2
+gantt
+    title A Gantt Diagram
+    dateFormat  YYYY-MM-DD
+    section Section
+    A task           :a1, 2014-01-01, 30d
+    Another task     :after a1  , 20d
+    section Another
+    Task in sec      :2014-01-12  , 12d
+    another task      : 24d
+\`\`\`
+
+
+### flowchart
+\`\`\`mermaid=3
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+\`\`\`
+
+### class
+\`\`\`mermaid=4
+classDiagram
+    Animal <|-- Duck
+    Animal <|-- Fish
+    Animal <|-- Zebra
+    Animal : +int age
+    Animal : +String gender
+    Animal: +isMammal()
+    Animal: +mate()
+    class Duck{
+      +String beakColor
+      +swim()
+      +quack()
+    }
+    class Fish{
+      -int sizeInFeet
+      -canEat()
+    }
+    class Zebra{
+      +bool is_wild
+      +run()
+    }
+\`\`\`
+
+### state
+\`\`\`mermaid=5
+stateDiagram-v2
+    [*] --> Still
+    Still --> [*]
+    Still --> Moving
+    Moving --> Still
+    Moving --> Crash
+    Crash --> [*]
+\`\`\`
+
+### er
+\`\`\`mermaid=6
+erDiagram
+    CUSTOMER }|..|{ DELIVERY-ADDRESS : has
+    CUSTOMER ||--o{ ORDER : places
+    CUSTOMER ||--o{ INVOICE : "liable for"
+    DELIVERY-ADDRESS ||--o{ ORDER : receives
+    INVOICE ||--|{ ORDER : covers
+    ORDER ||--|{ ORDER-ITEM : includes
+    PRODUCT-CATEGORY ||--|{ PRODUCT : contains
+    PRODUCT ||--o{ ORDER-ITEM : "ordered in"
+\`\`\`
+
+### journey
+\`\`\`mermaid=7
+journey
+    title My working day
+    section Go to work
+      Make tea: 5: Me
+      Go upstairs: 3: Me
+      Do work: 1: Me, Cat
+    section Go home
+      Go downstairs: 5: Me
+      Sit down: 3: Me
+\`\`\`
+
+
+### gitGraph
+\`\`\`mermaid=8
+gitGraph
+    commit
+    commit
+    branch develop
+    checkout develop
+    commit
+    commit
+    checkout main
+    merge develop
+    commit
+    commit
+\`\`\`
+
+### pie
+\`\`\`mermaid=9
+pie title Pets adopted by volunteers
+    "Dogs" : 386
+    "Cats" : 85
+    "Rats" : 15
+\`\`\`
+
+### mindmap
+\`\`\`mermaid=10
+mindmap
+  root((mindmap))
+    Origins
+      Long history
+      ::icon(fa fa-book)
+      Popularisation
+        British popular psychology author Tony Buzan
+    Research
+      On effectivness<br/>and features
+      On Automatic creation
+        Uses
+            Creative techniques
+            Strategic planning
+            Argument mapping
+    Tools
+      Pen and paper
+      Mermaid
+\`\`\`
 `;
 
 export default data;
