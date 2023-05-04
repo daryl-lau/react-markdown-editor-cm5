@@ -242,7 +242,7 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
       const token = tokens[idx];
       const code = token.content.trim();
       const info = token.info.trim();
-      if (info.startsWith('mermaid=')) {
+      if (/^mermaid=\S+$/.test(info)) {
         const id = info.split('=')[1];
         const uniqId = 'render' + id;
         if (codeRef.current[uniqId] != code) {
