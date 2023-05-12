@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useImperativeHandle } from 'react';
 import $ from 'jquery';
 import hljs from 'highlight.js';
+import ClipboardJS from 'clipboard';
 import convert from 'htmr';
 import './index.css';
 import 'highlight.js/styles/atom-one-dark.css';
@@ -38,15 +39,15 @@ let md: any = markdownIt({
         const parsedCode = hljs.highlight(str, { language, ignoreIllegals: true }).value;
         const lines = parsedCode.split(/\n/).slice(0, -1);
         const gutter = lines.map((_: any, index: number) => `<span class="code-line">${index + 1}</span><br>`).join('');
-        const html = `<pre class="hljs codeWrapper"><table><tbody><tr><td class="gutter"><pre>${gutter}</pre></td><td><code class=${`language-${lang}`}>${parsedCode}</code></td></tr></tbody></table></pre>`;
+        const html = `<pre class="code-highlight hljs"><span class="lang-label">${language}</span><div class="copy-btn">Copy</div><div class="codeWrapper"><table><tbody><tr><td class="gutter"><pre>${gutter}</pre></td><td><pre class="language-${lang} copy-target">${parsedCode}</pre></td></tr></tbody></table></div></pre>`;
         return html;
-      } catch (__) {}
+      } catch (_) {}
     }
 
     const parsedCode = md.utils.escapeHtml(str);
     const lines = parsedCode.split(/\n/).slice(0, -1);
     const gutter = lines.map((_: string, index: number) => `<span class="code-line">${index + 1}</span><br>`).join('');
-    const html = `<pre class="hljs codeWrapper"><table><tbody><tr><td class="gutter"><pre>${gutter}</pre></td><td><code class=${`language-${lang}`}>${parsedCode}</code></td></tr></tbody></table></pre>`;
+    const html = `<pre class="code-highlight hljs"><span class="lang-label">${language}</span><div class="copy-btn">Copy</div><div class="codeWrapper"><table><tbody><tr><td class="gutter"><pre>${gutter}</pre></td><td><pre class="language-${lang} copy-target">${parsedCode}</pre></td></tr></tbody></table></div></pre>`;
     return html;
   },
 });
@@ -254,6 +255,25 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
         return `<div class="mermaid ${uniqId}" data-id=${uniqId}><div id="code-${uniqId}" style="display:none">${code}</div><div id="svg-${uniqId}"></div></div>`;
       }
       return defaultRenderer(tokens, idx, opts, env, self);
+    };
+  }, []);
+
+  useEffect(() => {
+    var clipboard = new ClipboardJS('.copy-btn', {
+      target: function (trigger) {
+        $(trigger).text('Copied');
+        return $(trigger).next().find('.copy-target')[0];
+      },
+    });
+
+    clipboard.on('success', function (e: { action: any; text: any; trigger: any; clearSelection: () => void }) {
+      e.clearSelection();
+      setTimeout(() => {
+        $(e.trigger).text('Copy');
+      }, 2000);
+    });
+    return () => {
+      clipboard.destroy();
     };
   }, []);
 

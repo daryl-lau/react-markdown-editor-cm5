@@ -40,7 +40,7 @@
 }
 
 .toc-list ul {
-  line-height: 2;
+  line-height: 1.5;
   padding: 0 15px;
 }
 
@@ -75,7 +75,7 @@
   padding: 0 60px;
   box-sizing: border-box;
   font-size: 1em;
-  line-height: 2;
+  line-height: 1.5;
   min-height: 100%;
   transition: padding 0.2s ease-in-out;
   color: var(--text-color);
@@ -159,16 +159,47 @@
 }
 
 /* code block */
-.rmdcm5-container .codeWrapper code {
-  padding: 0;
+.rmdcm5-container .code-highlight {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
-.rmdcm5-container .codeWrapper {
+.rmdcm5-container .code-highlight .codeWrapper {
   overflow-x: auto;
-  font-size: 15px;
+  font-size: 16px;
 }
 
-.rmdcm5-container .codeWrapper table {
+.rmdcm5-container .code-highlight .lang-label {
+  position: absolute;
+  right: 10px;
+  top: 6px;
+}
+
+.rmdcm5-container .code-highlight .copy-btn {
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  right: 10px;
+  top: 6px;
+  line-height: 18px;
+  padding: 4px 8px;
+  background-color: var(--highlight-gutter-background);
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.rmdcm5-container .code-highlight .copy-btn:hover {
+  cursor: pointer;
+  background-color: #3e434c;
+}
+
+.rmdcm5-container .code-highlight:hover .copy-btn {
+  opacity: 1;
+}
+
+.rmdcm5-container .code-highlight .codeWrapper table {
   border: 0;
   margin: 0;
   width: auto;
@@ -176,33 +207,28 @@
   border-spacing: 0;
 }
 
-.rmdcm5-container .codeWrapper table td {
+.rmdcm5-container .code-highlight .codeWrapper table td {
   padding: 0;
 }
 
-.rmdcm5-container .codeWrapper table code {
-  width: 100%;
+.rmdcm5-container .code-highlight .codeWrapper pre {
+  margin: 0;
+  padding: 10px;
 }
 
-.rmdcm5-container pre {
-  tab-size: 4;
-}
-
-.rmdcm5-container code,
-.rmdcm5-container .codeWrapper .gutter pre {
+.rmdcm5-container .code-highlight,
+.rmdcm5-container .code-highlight .codeWrapper pre {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-.rmdcm5-container .codeWrapper .gutter {
+.rmdcm5-container .code-highlight .codeWrapper .gutter {
   display: inline-block;
   -webkit-user-select: none;
   user-select: none;
 }
-.rmdcm5-container .codeWrapper .gutter pre {
+.rmdcm5-container .code-highlight .codeWrapper .gutter pre {
   background: var(--highlight-gutter-background);
   color: var(--highlight-gutter-foreground);
-  padding: 10px;
   text-align: right;
-  margin: 0 8px 0 0;
 }
 
 /* table */

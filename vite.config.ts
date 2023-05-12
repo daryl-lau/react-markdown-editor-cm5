@@ -46,6 +46,7 @@ export default defineConfig({
         'markdown-it-deflist',
         'markdown-it-mathjax3',
         'mermaid',
+        'clipboard',
       ],
     },
   },
