@@ -225,6 +225,7 @@
 .rmdcm5-container .code-highlight .codeWrapper pre {
   margin: 0;
   padding: 10px;
+  tab-size: 4;
 }
 
 .rmdcm5-container .code-highlight,
