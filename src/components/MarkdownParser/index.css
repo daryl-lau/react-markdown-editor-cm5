@@ -121,6 +121,10 @@
   list-style: none;
 }
 
+.rmdcm5-container .mermaid .svg-container {
+  text-align: center;
+}
+
 /* alert area */
 .rmdcm5-container .alert-default p,
 .rmdcm5-container .alert-primary p,

@@ -88,7 +88,9 @@ const App = () => {
         initialValue={data}
         withToc={true}
         uploadImageMethod={uploadImageMethod}
-        onSave={(md, html, toc) => {}}
+        onSave={(md, toc) => {
+          console.log(md, toc);
+        }}
         options={{ scrollbarStyle: 'overlay', placeholder: '写点什么...' }}
       ></MdEditor>
     </>

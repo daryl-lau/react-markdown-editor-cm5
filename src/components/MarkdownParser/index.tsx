@@ -250,9 +250,9 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
           setCurrent(`${uniqId}-${+new Date()}`);
         }
         if (svgRef.current[uniqId]) {
-          return `<div class="mermaid ${uniqId}" data-id=${uniqId}><div id="code-${uniqId}" style="display:none">${code}</div><div id="svg-${uniqId}">${svgRef.current[uniqId]}</div></div>`;
+          return `<div class="mermaid ${uniqId}" data-id=${uniqId}><div id="code-${uniqId}" style="display:none">${code}</div><div class="svg-container" id="svg-${uniqId}">${svgRef.current[uniqId]}</div></div>`;
         }
-        return `<div class="mermaid ${uniqId}" data-id=${uniqId}><div id="code-${uniqId}" style="display:none">${code}</div><div id="svg-${uniqId}"></div></div>`;
+        return `<div class="mermaid ${uniqId}" data-id=${uniqId}><div id="code-${uniqId}" style="display:none">${code}</div><div class="svg-container" id="svg-${uniqId}"></div></div>`;
       }
       return defaultRenderer(tokens, idx, opts, env, self);
     };
