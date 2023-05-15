@@ -118,8 +118,8 @@ interface Options extends EditorConfiguration {
 | height            | number                                                                                           | 800            | height of editor,                                                     |
 | toolbars          | Array\\<toolbar\\>                                                                                 | all of toolbar | custom toollbar item, if it's a empty array, editor will hide toolbar |
 | toolBarHeight     | number                                                                                           | 34             | height editor toolbar                                                 |
-| onSave            | (mdValue?: string, htmlValue?: string): void                                                     |                | callback when editor save                                             |
-| onChange          | (mdValue?: string, htmlValue?: string): void                                                     |                | callback when editor content change                                   |
+| onSave            | (markdown?: string, toc?: string): void                                                     |                | callback when editor save                                             |
+| onChange          | (markdown?: string, toc?: string): void                                                     |                | callback when editor content change                                   |
 | uploadImageMethod | (file: string \\| Blob, insertImageCallback: (fileName: string, imageUrl: string) => void): void; |                | method of upload image                                                |
 | options           | Options                                                                                          |                | codsmirror options                                                    |
 

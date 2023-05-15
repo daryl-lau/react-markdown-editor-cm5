@@ -48,12 +48,12 @@ export interface ToolbarProps {
 }
 
 export interface valueProps {
-  mdValue: string;
-  tocValue: string;
+  markdown: string;
+  toc: string;
 }
 
 export interface callbackFunction {
-  (mdValue?: string, htmlValue?: string, tocValue?: string): void;
+  (markdown?: string, toc?: string): void;
 }
 
 export interface MdEditorProps {
@@ -82,7 +82,7 @@ export interface Options extends EditorConfiguration {
 }
 
 export interface MarkdownEditorProps {
-  state: { mdValue: string };
+  state: { markdown: string };
   onScroll: () => void;
   onMouseEnter: () => void;
   editorRef: React.MutableRefObject<Editor | undefined>;

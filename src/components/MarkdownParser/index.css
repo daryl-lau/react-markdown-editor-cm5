@@ -22,6 +22,7 @@
   --highlight-foreground: #abb2bf;
   --highlight-gutter-background: #353941;
   --highlight-gutter-foreground: #9da4b1;
+  --code-font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 /* TOC */
@@ -224,7 +225,7 @@
 
 .rmdcm5-container .code-highlight,
 .rmdcm5-container .code-highlight .codeWrapper pre {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: var(--code-font-family);
 }
 .rmdcm5-container .code-highlight .codeWrapper .gutter {
   display: inline-block;
@@ -320,6 +321,7 @@
   border-radius: 3px;
   padding: 2px 4px;
   overflow-wrap: break-word;
+  font-family: var(--code-font-family);
 }
 
 .rmdcm5-container code[class^='language-'] {

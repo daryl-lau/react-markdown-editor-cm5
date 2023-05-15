@@ -37,7 +37,7 @@ declare interface uploadImageMethod {
 }
 
 declare interface callbackFunction {
-  (mdValue?: string, htmlValue?: string, tocValue?: string): void;
+  (markdown?: string, toc?: string): void;
 }
 
 export interface Options extends EditorConfiguration {

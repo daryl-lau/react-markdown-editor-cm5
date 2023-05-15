@@ -213,7 +213,7 @@ md.use(emoji)
 
 const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => {
   const { state, height, onScroll, onMouseEnter, dispatch, onChange, toolBarHeight, withToc = true } = props;
-  const [htmlValue, setHtmlValue] = useState('');
+  const [html, setHtml] = useState('');
   const [tocVisible, setTocVisible] = useState(false);
   const markdownParserRef = useRef<any>();
   const codeRef = useRef<any>({});
@@ -306,10 +306,10 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
   }, []);
 
   useEffect(() => {
-    const htmlVlaue = md.render(state.mdValue);
-    onChange && onChange(state.mdValue, htmlVlaue, state.tocValue);
-    setHtmlValue(htmlVlaue);
-  }, [state.mdValue, state.tocValue]);
+    const htmlVlaue = md.render(state.markdown);
+    onChange && onChange(state.markdown, state.toc);
+    setHtml(htmlVlaue);
+  }, [state.markdown, state.toc]);
 
   const renderToc = () => {
     const options = {
@@ -335,7 +335,7 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
     };
     return (
       <div className="toc-list">
-        <div>{convert(state.tocValue, options as any)}</div>
+        <div>{convert(state.toc, options as any)}</div>
       </div>
     );
   };
@@ -350,11 +350,11 @@ const MarkdownParser = (props: MarkdownParserProps, ref: React.Ref<unknown>) => 
         ref={markdownParserRef}
         style={{ height }}
         className="rmdcm5-container"
-        dangerouslySetInnerHTML={{ __html: htmlValue }}
+        dangerouslySetInnerHTML={{ __html: html }}
         onScroll={() => onScroll()}
         onMouseEnter={onMouseEnter}
       ></div>
-      {withToc && state.tocValue && (
+      {withToc && state.toc && (
         <Popover
           content={renderToc()}
           transitionName="popover-fade"

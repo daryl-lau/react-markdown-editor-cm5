@@ -143,7 +143,7 @@ const MarkdownEditor = (props: MarkdownEditorProps, _ref: React.Ref<Editor>) => 
         return insertLine(cm, true);
       },
       'Ctrl-S': function () {
-        onSave && onSave(valueRef.current.mdValue, valueRef.current.htmlValue, valueRef.current.tocValue);
+        onSave && onSave(valueRef.current.markdown, valueRef.current.toc);
       },
     };
 
@@ -166,7 +166,7 @@ const MarkdownEditor = (props: MarkdownEditorProps, _ref: React.Ref<Editor>) => 
     });
 
     editorRef.current.on('change', function (cm: any) {
-      dispatch({ type: 'setMdValue', value: cm.getValue() });
+      dispatch({ type: 'setMarkdown', value: cm.getValue() });
       cm.showHint && cm.showHint();
       return CodeMirror.Pass;
     });

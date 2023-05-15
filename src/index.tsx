@@ -45,17 +45,17 @@ const defaultToolbar: Array<toolbar> = [
 
 const reducer = (state: valueProps, payload: { type: string; value: string }) => {
   switch (payload.type) {
-    case 'setMdValue':
-      return { ...state, mdValue: payload.value };
+    case 'setMarkdown':
+      return { ...state, markdown: payload.value };
     case 'setTocValue':
-      return { ...state, tocValue: payload.value };
+      return { ...state, toc: payload.value };
     default:
       throw new Error();
   }
 };
 
 const init = (value: string) => {
-  return { mdValue: value, tocValue: '' };
+  return { markdown: value, toc: '' };
 };
 
 const defaultLanguages = ['bash', 'javascript', 'typescript', 'go', 'python', 'jsx', 'tsx', 'sql', 'markmap'];
@@ -86,7 +86,7 @@ const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
 
   useImperativeHandle(ref, () => ({
     getValues: () => {
-      return { ...state, htmlValue: parserRef.current.getHtml() };
+      return { ...state };
     },
   }));
 
@@ -170,7 +170,7 @@ const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
     syncParserScrollRef.current = debounce(
       () => {
         if (scrollFlag.current !== 'editor' || !editorRef.current) return;
-        let scrollMap = buildScrollMap(state.mdValue);
+        let scrollMap = buildScrollMap(state.markdown);
         let lineHeight = editorRef.current?.defaultTextHeight(),
           lineNo: number,
           posTo: any;
@@ -181,12 +181,12 @@ const MdEditor = (props: MdEditorProps, ref: React.Ref<any>) => {
       50,
       { maxWait: 50 },
     );
-  }, [state.mdValue]);
+  }, [state.markdown]);
 
   const syncEditorScroll = debounce(
     () => {
       if (scrollFlag.current !== 'parser' || !editorRef.current) return;
-      let scrollMap = buildScrollMap(state.mdValue);
+      let scrollMap = buildScrollMap(state.markdown);
       if (!scrollMap) {
         return;
       }
